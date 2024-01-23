@@ -16,16 +16,23 @@ public class TutorController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Save(TutorDto dto)
+    public async Task<IActionResult> Save([FromBody] TutorDto dto)
     {
         await _tutorRepository.Save(dto);
         return Ok("Tutor Cadastrado");
     }
 
-    [HttpGet]
+    [HttpGet("{id}")]
     public async Task<IActionResult> GetIdTutor(string id)
     {
         var tutor = await _tutorRepository.GetIdTutor(id);
         return Ok(tutor);
+    }
+
+    [HttpPost("{id}")]
+    public async Task<IActionResult> UpdateTutor([FromBody] TutorDto dto, string id)
+    {
+        await _tutorRepository.UpdateTutor(dto, id);
+        return Ok("Tutor Atualizado");
     }
 }

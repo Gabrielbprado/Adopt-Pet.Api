@@ -28,13 +28,26 @@ public class TutorRepository : ITutorRepository
        
     }
 
-    public async Task<TutorModel> GetIdTutor(string id)
+    public async Task<ReadTutorDto> GetIdTutor(string id)
+    {
+        var tutor = await _userManeger.FindByIdAsync(id);
+        var dto = _mapper.Map<ReadTutorDto>(tutor);
+        if(tutor == null)
+        {
+            throw new ApplicationException("Tutor não encontrado");
+        }
+        return dto;
+    }
+
+    public async Task UpdateTutor(TutorDto dto,string id)
     {
         var tutor = await _userManeger.FindByIdAsync(id);
         if(tutor == null)
         {
             throw new ApplicationException("Tutor não encontrado");
         }
-        return tutor;
+        tutor.UserName = dto.Username;
+        tutor.NormalizedUserName = dto.Username.ToUpper();
+
     }
 }
