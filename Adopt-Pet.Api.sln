@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adopt-Pet.Api", "Adopt-Pet.Api.csproj", "{3C93F3E2-96D1-414E-A0DA-7028E543C115}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adopt-Pet.Api", "Adopt-Pet.Api.csproj", "{3C93F3E2-96D1-414E-A0DA-7028E543C115}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4- Testes", "4- Testes", "{75AE585F-4E92-4ED0-9EDB-CCCDAA335FFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adopt-Pet.infrastructure", "..\Adopt-Pet.infrastructure\Adopt-Pet.infrastructure.csproj", "{C0D51702-485B-4BE4-81D2-7B6B97959D5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{3C93F3E2-96D1-414E-A0DA-7028E543C115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C93F3E2-96D1-414E-A0DA-7028E543C115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C93F3E2-96D1-414E-A0DA-7028E543C115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0D51702-485B-4BE4-81D2-7B6B97959D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0D51702-485B-4BE4-81D2-7B6B97959D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0D51702-485B-4BE4-81D2-7B6B97959D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0D51702-485B-4BE4-81D2-7B6B97959D5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0D51702-485B-4BE4-81D2-7B6B97959D5E} = {75AE585F-4E92-4ED0-9EDB-CCCDAA335FFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CE4DA41-6DB6-4697-837C-0F996171CF50}

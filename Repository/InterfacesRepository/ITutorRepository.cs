@@ -8,4 +8,5 @@ public interface ITutorRepository
      Task Save(TutorDto dto);
     Task<ReadTutorDto> GetIdTutor(string id);
     Task UpdateTutor(TutorDto dto,string id);
+
 }

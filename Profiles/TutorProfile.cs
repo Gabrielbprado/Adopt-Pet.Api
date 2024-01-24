@@ -9,6 +9,7 @@ public class TutorProfile : Profile
     public TutorProfile()
     {
         CreateMap<TutorDto, TutorModel>();
-        CreateMap<ReadTutorDto, TutorDto >();
+        CreateMap<TutorModel,ReadTutorDto >();
+        CreateMap<ReadTutorDto,TutorDto >();
     }
 }

@@ -30,7 +30,7 @@ public class TutorRepository : ITutorRepository
 
     public async Task<ReadTutorDto> GetIdTutor(string id)
     {
-        var tutor = await _userManeger.FindByIdAsync(id);
+        TutorModel? tutor = await _userManeger.FindByIdAsync(id);
         var dto = _mapper.Map<ReadTutorDto>(tutor);
         if(tutor == null)
         {
@@ -49,5 +49,10 @@ public class TutorRepository : ITutorRepository
         tutor.UserName = dto.Username;
         tutor.NormalizedUserName = dto.Username.ToUpper();
 
+    }
+
+    public Task Logout(string id)
+    {
+        throw new NotImplementedException();
     }
 }

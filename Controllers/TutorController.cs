@@ -35,4 +35,6 @@ public class TutorController : ControllerBase
         await _tutorRepository.UpdateTutor(dto, id);
         return Ok("Tutor Atualizado");
     }
+
+ 
 }
