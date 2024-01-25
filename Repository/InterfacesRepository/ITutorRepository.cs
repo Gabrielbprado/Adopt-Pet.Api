@@ -5,9 +5,9 @@ namespace Adopt_Pet.Api.Repository.InterfacesRepository;
 
 public interface ITutorRepository
 {
-     Task Save(AbrigoDto dto);
+     Task Save(TutorDto dto);
     Task<ReadTutorDto> GetIdTutor(string id);
-    Task UpdateTutor(AbrigoDto dto,string id);
+    Task UpdateTutor(TutorDto dto,string id);
     Task Delete(string id);
     Task<string> Login(TutorLoginDto dto);
 }

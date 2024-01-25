@@ -1,22 +1,21 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿
 
-namespace Adopt_Pet.Api.Data.Dtos.AbrigoDtos
+namespace adopt_pet.api.data.dtos.abrigodtos
 {
     public class ReadAbrigoDto
     {
 
-        public string Username { get; set; } = null!;
+        public string username { get; set; } = null!;
 
-        public string City { get; set; } = null!;
+        public string city { get; set; } = null!;
 
-        public string State { get; set; } = null!;
-
-
-        public string Email { get; set; } = null!;
+        public string state { get; set; } = null!;
 
 
-        public int PhoneNumber { get; set; }
+        public string email { get; set; } = null!;
+
+
+        public int phonenumber { get; set; }
         public int CNPJ { get; set; }
     }
 }

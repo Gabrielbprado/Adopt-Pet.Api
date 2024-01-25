@@ -28,7 +28,7 @@ public class TokenService
                
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("asdadauiohdiauydiisa65"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
             expires: DateTime.Now.AddDays(30),
@@ -39,21 +39,21 @@ public class TokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
             
     }
+
     public string GenerateTokenAbrigo(AbrigoModel model)
     {
         Claim[] claims = new Claim[]
         {
-              new Claim("id",model.Id),
+              new Claim("id",model.id.ToString()),
               new Claim("username",model.UserName),
               new Claim("city",model.City),
               new Claim("state",model.State),
               new Claim("email",model.Email),
               new Claim("phoneNumber",model.PhoneNumber),
-              new Claim("cnpj",model.CNPJ),
 
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("asdadauiohdiauydiisa65"));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["SymmetricSecurityKey"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
             expires: DateTime.Now.AddDays(30),

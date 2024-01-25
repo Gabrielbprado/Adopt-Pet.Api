@@ -1,4 +1,5 @@
-﻿using Adopt_Pet.Api.Data.Dtos.TutorDtos;
+﻿using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
+using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ public class TutorController : ControllerBase
     }
 
     [HttpPost("cadastrar")]
-    public async Task<IActionResult> Save([FromBody] AbrigoDto dto)
+    public async Task<IActionResult> Save([FromBody] TutorDto dto)
     {
         await _tutorRepository.Save(dto);
         return Ok("Tutor Cadastrado");
@@ -30,7 +31,7 @@ public class TutorController : ControllerBase
     }
 
     [HttpPost("atualizar/{id}")]
-    public async Task<IActionResult> UpdateTutor([FromBody] AbrigoDto dto, string id)
+    public async Task<IActionResult> UpdateTutor([FromBody] TutorDto dto, string id)
     {
         await _tutorRepository.UpdateTutor(dto, id);
         return NoContent();
@@ -48,7 +49,7 @@ public class TutorController : ControllerBase
     {
        var token = await _tutorRepository.Login(dto);
         return Ok(token);
-       
+     
     }
 
  

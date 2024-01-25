@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
 {
-    public class AbrigoDto
+    public class TutorDto
     {
         [Required]
         public string Username { get; set; } = null!;

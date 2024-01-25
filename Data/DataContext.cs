@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Adopt_Pet.Api.Data;
 
-public class DataContext : IdentityDbContext
+public class DataContext : IdentityDbContext<TutorModel, IdentityRole, string>
 {
-
     public DataContext(DbContextOptions<DataContext> opts) : base(opts)
     {
         
     }
+    public DbSet <AbrigoModel> abrigoModels { get; set; }
 
 }

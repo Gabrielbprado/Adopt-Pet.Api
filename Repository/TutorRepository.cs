@@ -15,13 +15,15 @@ public class TutorRepository : ITutorRepository
     private readonly UserManager<TutorModel> _userManeger;
     private readonly SignInManager<TutorModel> _signInManager;
     private readonly TokenService _tokenService;
-    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager)
+    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager, TokenService tokenService)
     {
         _userManeger = userManager;
         _mapper = mapper;
         _signInManager = signInManager;
+        _tokenService = tokenService;
+       
     }
-    public async Task Save(AbrigoDto dto)
+    public async Task Save(TutorDto dto)
     {
         var model = _mapper.Map<TutorModel>(dto);
         var tutor = await _userManeger.CreateAsync(model, dto.Password);
@@ -43,7 +45,7 @@ public class TutorRepository : ITutorRepository
         return dto;
     }
 
-    public async Task UpdateTutor(AbrigoDto dto, string id)
+    public async Task UpdateTutor(TutorDto dto, string id)
     {
         var tutor = await _userManeger.FindByIdAsync(id);
         if (tutor == null)
@@ -75,7 +77,7 @@ public class TutorRepository : ITutorRepository
             throw new ApplicationException("Falha ao Logar");
         }
 
-        var tutor = _signInManager.UserManager.Users.FirstOrDefault(x => x.UserName == dto.Username);
+        var tutor =  _signInManager.UserManager.Users.FirstOrDefault(x => x.UserName == dto.Username);
         var token =  _tokenService.GenerateTokenTutor(tutor);
         return token;
     }

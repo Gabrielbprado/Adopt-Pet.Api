@@ -2,6 +2,7 @@ using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
+using Adopt_Pet.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,9 +15,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddIdentity<TutorModel, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddIdentity<TutorModel, IdentityRole>().AddEntityFrameworkStores<DataContext>();
-builder.Services.AddTransient<ITutorRepository, TutorRepository>();
+builder.Services.AddTransient<ITutorRepository,TutorRepository>();
+builder.Services.AddTransient<IAbrigoRepository,AbrigoRepository>();
+builder.Services.AddScoped<TokenService>();
+
 
 
 var app = builder.Build();
@@ -29,6 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 
 app.UseAuthorization();
 

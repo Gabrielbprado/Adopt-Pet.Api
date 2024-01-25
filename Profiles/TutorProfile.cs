@@ -1,4 +1,5 @@
-﻿using Adopt_Pet.Api.Data.Dtos.TutorDtos;
+﻿using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
+using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Models;
 using AutoMapper;
 
@@ -8,7 +9,7 @@ public class TutorProfile : Profile
 {
     public TutorProfile()
     {
-        CreateMap<AbrigoDto, TutorModel>();
+        CreateMap<TutorDto, TutorModel>();
         CreateMap<TutorModel,ReadTutorDto >();
     }
 }

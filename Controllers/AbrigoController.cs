@@ -22,6 +22,13 @@ public class AbrigoController : ControllerBase
         return Ok("Abrigo Cadastrado");
     }
 
+    [HttpGet("listarAll")]
+    public async Task<IActionResult> GetAllAbrigo()
+    {
+        var abrigo = await _abrigoRepository.GetAllAbrigo();
+        return Ok(abrigo);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetIdAbrigo(string id)
     {
@@ -48,7 +55,7 @@ public class AbrigoController : ControllerBase
     {
        var token = await _abrigoRepository.Login(dto);
         return Ok(token);
-       
+     
     }
 
  
