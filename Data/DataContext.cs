@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Adopt_Pet.Api.Data;
 
-public class DataContext : IdentityDbContext<TutorModel>
+public class DataContext : IdentityDbContext
 {
 
     public DataContext(DbContextOptions<DataContext> opts) : base(opts)

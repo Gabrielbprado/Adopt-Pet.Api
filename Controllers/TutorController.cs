@@ -1,4 +1,4 @@
-﻿using Adopt_Pet.Api.Data.Dtos;
+﻿using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +15,8 @@ public class TutorController : ControllerBase
         _tutorRepository = tutorRepository;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Save([FromBody] TutorDto dto)
+    [HttpPost("cadastrar")]
+    public async Task<IActionResult> Save([FromBody] AbrigoDto dto)
     {
         await _tutorRepository.Save(dto);
         return Ok("Tutor Cadastrado");
@@ -29,11 +29,26 @@ public class TutorController : ControllerBase
         return Ok(tutor);
     }
 
-    [HttpPost("{id}")]
-    public async Task<IActionResult> UpdateTutor([FromBody] TutorDto dto, string id)
+    [HttpPost("atualizar/{id}")]
+    public async Task<IActionResult> UpdateTutor([FromBody] AbrigoDto dto, string id)
     {
         await _tutorRepository.UpdateTutor(dto, id);
-        return Ok("Tutor Atualizado");
+        return NoContent();
+    }
+
+    [HttpDelete("deletar/{id}")]
+    public async Task<IActionResult> DeleteTutor(string id)
+    {
+        await _tutorRepository.Delete(id);
+        return NoContent();
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] TutorLoginDto dto)
+    {
+       var token = await _tutorRepository.Login(dto);
+        return Ok(token);
+       
     }
 
  

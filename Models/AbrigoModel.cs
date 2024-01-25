@@ -7,7 +7,8 @@ namespace Adopt_Pet.Api.Models
         public string City { get; set; } = null!;
 
         public string State { get; set; } = null!;
-        public TutorModel() : base() { }
+        public string CNPJ { get; set; } = null!;
+        public AbrigoModel() : base() { }
      
     }
 }

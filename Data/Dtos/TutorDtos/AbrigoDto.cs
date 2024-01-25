@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Adopt_Pet.Api.Data.Dtos
+namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
 {
-    public class TutorDto
+    public class AbrigoDto
     {
         [Required]
         public string Username { get; set; } = null!;
@@ -15,7 +15,7 @@ namespace Adopt_Pet.Api.Data.Dtos
         [EmailAddress]
         public string Email { get; set; } = null!;
         [Required]
-        
+
         public int PhoneNumber { get; set; }
         [Required]
         [DataType(DataType.Password)]
