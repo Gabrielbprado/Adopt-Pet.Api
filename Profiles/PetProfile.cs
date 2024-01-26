@@ -12,7 +12,7 @@ public class PetProfile : Profile
     public PetProfile()
     {
         CreateMap<PetDto, PetModel>();
-        CreateMap<PetModel,List<ReadPetDto>>();
-        CreateMap<PetModel, ReadPetDto>();
+        CreateMap<PetModel, List<ReadPetDto>>();
+        CreateMap<PetModel, ReadPetDto>().ForMember(dto => dto.ReadAbrigoDto, opt => opt.MapFrom(pet => pet.AbrigoModel));
     }
 }

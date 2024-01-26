@@ -18,6 +18,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.15" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.15">
       <PrivateAssets>all</PrivateAssets>

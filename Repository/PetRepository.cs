@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
 using Adopt_Pet.Api.Data.Dtos.PetDtos;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Adopt_Pet.Api.Repository;
 
@@ -73,13 +74,14 @@ public class PetRepository : IPetRepository
 
  
 
-    public async Task<IEnumerable<ReadPetDto>> GetAllPet()
+    public async Task<IEnumerable<ReadPetDto>> GetAllPet([FromQuery] int? Abrigo_id = null)
     {
-        var pet =  _context.petModels.ToList();
-        var petdto = _mapper.Map<List<ReadPetDto>>(pet);
-        return petdto;
+        return _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, image, Abrigo_id FROM petModels" +
+            $" where petModels.Abrigo_id = {Abrigo_id}").ToList());
+
     }
 
 
 
 }
+

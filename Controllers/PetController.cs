@@ -24,9 +24,10 @@ public class PetController : ControllerBase
     }
 
     [HttpGet("listarAll")]
-    public  IActionResult GetAllAbrigo()
+    public  IActionResult GetAllAbrigo(int? Abrigo_id = null)
     {
-        var abrigo = _PetRepository.GetAllPet();
+        var abrigo = _PetRepository.GetAllPet(Abrigo_id);
+
         return Ok(abrigo);
     }
 

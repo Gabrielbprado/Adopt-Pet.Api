@@ -11,5 +11,5 @@ public interface IPetRepository
     Task<ReadPetDto> GetIdPet(string id);
     Task UpdatePet(PetDto dto,string id);
     Task Delete(string id);
-    Task<IEnumerable<ReadPetDto>> GetAllPet();
+    Task<IEnumerable<ReadPetDto>> GetAllPet(int? Abrigo_id = null);
 }
