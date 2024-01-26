@@ -11,5 +11,5 @@ public interface IAbrigoRepository
     Task UpdateAbrigo(AbrigoDto dto,string id);
     Task Delete(string id);
     Task<string> Login(AbrigoLoginDto dto);
-    Task<IEnumerable<ReadAbrigoDto>> GetAllAbrigo();
+    IEnumerable<ReadAbrigoDto> GetAllAbrigo();
 }

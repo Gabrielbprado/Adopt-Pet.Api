@@ -33,14 +33,14 @@ public class AbrigoRepository : IAbrigoRepository
         var password = dto.Password;
         var hash = HashPassword(password);
         model.PasswordHash = hash;
-        var abrigo = await _context.abrigoModels.AddAsync(model);
+        var abrigo = await _context.AbrigoModel.AddAsync(model);
         _context.SaveChanges();
 
     }
 
     public async Task<ReadAbrigoDto> GetIdAbrigo(string id)
     {
-        AbrigoModel? abrigo = await _context.abrigoModels.FindAsync(id);
+        AbrigoModel? abrigo = await _context.AbrigoModel.FindAsync(id);
         var dto = _mapper.Map<ReadAbrigoDto>(abrigo);
         if (abrigo == null)
         {
@@ -51,7 +51,7 @@ public class AbrigoRepository : IAbrigoRepository
 
     public async Task UpdateAbrigo(AbrigoDto dto, string id)
     {
-        var abrigo = await _context.abrigoModels.FindAsync(id);
+        var abrigo = await _context.AbrigoModel.FindAsync(id);
         if (abrigo == null)
         {
             throw new ApplicationException("AbrigoDtos não encontrado");
@@ -63,29 +63,29 @@ public class AbrigoRepository : IAbrigoRepository
 
     public async Task Delete(string id)
     {
-        var Abrigo = await _context.abrigoModels.FindAsync(id);
+        var Abrigo = await _context.AbrigoModel.FindAsync(id);
         if (Abrigo == null)
         {
             throw new ApplicationException("Abrigo não encontrado");
 
         }
-         _context.abrigoModels.Remove(Abrigo);
+         _context.AbrigoModel.Remove(Abrigo);
         _context.SaveChanges();
 
     }
 
- 
 
-    public async Task<IEnumerable<ReadAbrigoDto>> GetAllAbrigo()
+
+    public IEnumerable<ReadAbrigoDto> GetAllAbrigo()
     {
-        var abrigo =  _context.abrigoModels.ToList();
-        var abrigodto = _mapper.Map<List<ReadAbrigoDto>>(abrigo);
-        return abrigodto;
+        var abrigos = _context.AbrigoModel.ToList(); // Busca todos os abrigos do banco de dados
+        return _mapper.Map<List<ReadAbrigoDto>>(abrigos); // Mapeia a lista de abrigos para uma lista de DTOs
     }
+
 
     public async Task<string> Login(AbrigoLoginDto dto)
     {
-        var abrigo = await _context.abrigoModels.FirstOrDefaultAsync(x => x.UserName == dto.Username);
+        var abrigo = await _context.AbrigoModel.FirstOrDefaultAsync(x => x.UserName == dto.Username);
         if (abrigo == null)
         {
             bool validPassword = BCrypt.Net.BCrypt.Verify(dto.Password, abrigo.PasswordHash);
@@ -93,7 +93,7 @@ public class AbrigoRepository : IAbrigoRepository
             {
                 throw new ApplicationException("Senha incorreta");
             }
-            throw new ApplicationException("Usuario não encontrado");
+            throw new ApplicationException("Abrigo não encontrado");
         }
         return _tokenService.GenerateTokenAbrigo(abrigo);
     }

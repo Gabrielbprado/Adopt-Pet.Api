@@ -60,7 +60,7 @@ namespace Adopt_Pet.Api.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("abrigoModels");
+                    b.ToTable("petModels");
                 });
 
             modelBuilder.Entity("Adopt_Pet.Api.Models.TutorModel", b =>

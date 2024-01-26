@@ -11,7 +11,7 @@ namespace Adopt_Pet.Api.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "abrigoModels",
+                name: "petModels",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "INTEGER", nullable: false)
@@ -35,7 +35,7 @@ namespace Adopt_Pet.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "abrigoModels");
+                name: "petModels");
         }
     }
 }

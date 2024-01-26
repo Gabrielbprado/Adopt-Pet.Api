@@ -11,6 +11,7 @@ public class AbrigoProfile : Profile
     public AbrigoProfile()
     {
         CreateMap<AbrigoDto, AbrigoModel>();
+        CreateMap<AbrigoModel,List<ReadAbrigoDto>>();
         CreateMap<AbrigoModel,ReadAbrigoDto >();
     }
 }

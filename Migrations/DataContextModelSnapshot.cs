@@ -53,7 +53,46 @@ namespace Adopt_Pet.Api.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("abrigoModels");
+                    b.ToTable("AbrigoModel");
+                });
+
+            modelBuilder.Entity("Adopt_Pet.Api.Models.PetModel", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Abrigo_id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("adopted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("age")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("image")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("Abrigo_id");
+
+                    b.ToTable("petModels");
                 });
 
             modelBuilder.Entity("Adopt_Pet.Api.Models.TutorModel", b =>
@@ -256,6 +295,17 @@ namespace Adopt_Pet.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Adopt_Pet.Api.Models.PetModel", b =>
+                {
+                    b.HasOne("Adopt_Pet.Api.Models.AbrigoModel", "AbrigoModel")
+                        .WithMany("PetModel")
+                        .HasForeignKey("Abrigo_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AbrigoModel");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -305,6 +355,11 @@ namespace Adopt_Pet.Api.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Adopt_Pet.Api.Models.AbrigoModel", b =>
+                {
+                    b.Navigation("PetModel");
                 });
 #pragma warning restore 612, 618
         }

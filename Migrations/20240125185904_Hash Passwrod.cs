@@ -12,11 +12,11 @@ namespace Adopt_Pet.Api.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "Password",
-                table: "abrigoModels");
+                table: "petModels");
 
             migrationBuilder.RenameColumn(
                 name: "Repassword",
-                table: "abrigoModels",
+                table: "petModels",
                 newName: "PasswordHash");
         }
 
@@ -25,12 +25,12 @@ namespace Adopt_Pet.Api.Migrations
         {
             migrationBuilder.RenameColumn(
                 name: "PasswordHash",
-                table: "abrigoModels",
+                table: "petModels",
                 newName: "Repassword");
 
             migrationBuilder.AddColumn<string>(
                 name: "Password",
-                table: "abrigoModels",
+                table: "petModels",
                 type: "TEXT",
                 nullable: false,
                 defaultValue: "");

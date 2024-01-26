@@ -19,6 +19,7 @@ builder.Services.AddIdentity<TutorModel, IdentityRole>().AddEntityFrameworkStore
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ITutorRepository,TutorRepository>();
 builder.Services.AddTransient<IAbrigoRepository,AbrigoRepository>();
+builder.Services.AddTransient<IPetRepository, PetRepository>();
 builder.Services.AddScoped<TokenService>();
 
 

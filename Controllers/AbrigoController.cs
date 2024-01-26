@@ -23,9 +23,9 @@ public class AbrigoController : ControllerBase
     }
 
     [HttpGet("listarAll")]
-    public async Task<IActionResult> GetAllAbrigo()
+    public  IActionResult GetAllAbrigo()
     {
-        var abrigo = await _abrigoRepository.GetAllAbrigo();
+        var abrigo =  _abrigoRepository.GetAllAbrigo();
         return Ok(abrigo);
     }
 
