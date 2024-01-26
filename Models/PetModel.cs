@@ -23,6 +23,7 @@ public class PetModel
     [Required]
     public string image { get; set; } = null!;
     public virtual AbrigoModel AbrigoModel { get; set; } = null!;
+    public virtual AdocaoModel AdocaoModel { get; set; }
 
 
 }

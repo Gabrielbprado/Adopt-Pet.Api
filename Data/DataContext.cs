@@ -19,6 +19,12 @@ public class DataContext : IdentityDbContext<TutorModel, IdentityRole, string>
             .HasOne(pet => pet.AbrigoModel)
             .WithMany(abrigo => abrigo.PetModel) 
             .HasForeignKey(pet => pet.Abrigo_id); 
+        builder.Entity<AdocaoModel>().HasOne(adocao => adocao.PetModel)
+            .WithOne(pet => pet.AdocaoModel)
+            .HasForeignKey<AdocaoModel>(adocao => adocao.pet_id);
+        builder.Entity<AdocaoModel>().HasOne(adocao => adocao.TutorModel)
+    .WithOne(tuto => tuto.AdocaoModel)
+    .HasForeignKey<AdocaoModel>(adocao => adocao.tutor_id);
 
         // Outros mapeamentos aqui, se houver
 
@@ -27,5 +33,6 @@ public class DataContext : IdentityDbContext<TutorModel, IdentityRole, string>
 
     public DbSet <AbrigoModel> AbrigoModel { get; set; }
     public DbSet <PetModel> petModels { get; set; }
+    public DbSet<AdocaoModel> AdocaoModel { get; set; }
 
 }

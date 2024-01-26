@@ -8,8 +8,8 @@ namespace Adopt_Pet.Api.Repository.InterfacesRepository;
 public interface IPetRepository
 {
      Task Save(PetDto dto);
-    Task<ReadPetDto> GetIdPet(string id);
-    Task UpdatePet(PetDto dto,string id);
-    Task Delete(string id);
+    Task<ReadPetDto> GetIdPet(int id);
+    Task UpdatePet(PetDto dto, int id);
+    Task Delete(int id,AbrigoLoginDto dto);
     Task<IEnumerable<ReadPetDto>> GetAllPet(int? Abrigo_id = null);
 }

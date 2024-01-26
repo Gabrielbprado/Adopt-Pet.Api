@@ -19,13 +19,12 @@ public class PetRepository : IPetRepository
 {
     private readonly IMapper _mapper;
     private readonly DataContext _context;
-    public PetRepository(DataContext context, IMapper mapper)
+    private readonly IAbrigoRepository _abrigoRepository;
+    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository)
     {
         _context = context;
         _mapper = mapper;
-        
-        
-
+        _abrigoRepository = abrigoRepository;
     }
     public async Task Save(PetDto dto)
     {
@@ -35,7 +34,7 @@ public class PetRepository : IPetRepository
 
     }
 
-    public async Task<ReadPetDto> GetIdPet(string id)
+    public async Task<ReadPetDto> GetIdPet(int id)
     {
         PetModel? pet = await _context.petModels.FindAsync(id);
         var dto = _mapper.Map<ReadPetDto>(pet);
@@ -46,7 +45,7 @@ public class PetRepository : IPetRepository
         return dto;
     }
 
-    public async Task UpdatePet(PetDto dto, string id)
+    public async Task UpdatePet(PetDto dto, int id)
     {
         var pet = await _context.petModels.FindAsync(id);
         if (pet == null)
@@ -59,7 +58,7 @@ public class PetRepository : IPetRepository
 
     }
 
-    public async Task Delete(string id)
+    public async Task Delete(int id,AbrigoLoginDto dto)
     {
         var pet = await _context.petModels.FindAsync(id);
         if (pet == null)
@@ -67,6 +66,7 @@ public class PetRepository : IPetRepository
             throw new ApplicationException("pet não encontrado");
 
         }
+        await _abrigoRepository.Login(dto);
          _context.petModels.Remove(pet);
         _context.SaveChanges();
 

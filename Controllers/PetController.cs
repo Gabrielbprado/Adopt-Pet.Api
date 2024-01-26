@@ -32,23 +32,23 @@ public class PetController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetIdAbrigo(string id)
+    public async Task<IActionResult> GetIdAbrigo(int id)
     {
         var abrigo = await _PetRepository.GetIdPet(id);
         return Ok(abrigo);
     }
 
     [HttpPost("atualizar/{id}")]
-    public async Task<IActionResult> UpdateAbrigo([FromBody] PetDto dto, string id)
+    public async Task<IActionResult> UpdateAbrigo([FromBody] PetDto dto, int id)
     {
         await _PetRepository.UpdatePet(dto, id);
         return NoContent();
     }
 
     [HttpDelete("deletar/{id}")]
-    public async Task<IActionResult> DeleteTutor(string id)
+    public async Task<IActionResult> DeleteTutor([FromBody] AbrigoLoginDto dto,int id)
     {
-        await _PetRepository.Delete(id);
+        await _PetRepository.Delete(id,dto);
         return NoContent();
     }
 

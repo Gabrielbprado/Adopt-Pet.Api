@@ -30,21 +30,21 @@ public class AbrigoController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetIdAbrigo(string id)
+    public async Task<IActionResult> GetIdAbrigo(int id)
     {
         var abrigo = await _abrigoRepository.GetIdAbrigo(id);
         return Ok(abrigo);
     }
 
     [HttpPost("atualizar/{id}")]
-    public async Task<IActionResult> UpdateAbrigo([FromBody] AbrigoDto dto, string id)
+    public async Task<IActionResult> UpdateAbrigo([FromBody] AbrigoDto dto, int id)
     {
         await _abrigoRepository.UpdateAbrigo(dto, id);
         return NoContent();
     }
 
     [HttpDelete("deletar/{id}")]
-    public async Task<IActionResult> DeleteTutor(string id)
+    public async Task<IActionResult> DeleteTutor(int id)
     {
         await _abrigoRepository.Delete(id);
         return NoContent();

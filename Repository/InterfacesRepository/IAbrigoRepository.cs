@@ -7,9 +7,9 @@ namespace Adopt_Pet.Api.Repository.InterfacesRepository;
 public interface IAbrigoRepository
 {
      Task Save(AbrigoDto dto);
-    Task<ReadAbrigoDto> GetIdAbrigo(string id);
-    Task UpdateAbrigo(AbrigoDto dto,string id);
-    Task Delete(string id);
+    Task<ReadAbrigoDto> GetIdAbrigo(int id);
+    Task UpdateAbrigo(AbrigoDto dto, int id);
+    Task Delete(int id);
     Task<string> Login(AbrigoLoginDto dto);
     IEnumerable<ReadAbrigoDto> GetAllAbrigo();
 }

@@ -20,6 +20,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ITutorRepository,TutorRepository>();
 builder.Services.AddTransient<IAbrigoRepository,AbrigoRepository>();
 builder.Services.AddTransient<IPetRepository, PetRepository>();
+builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
 
 
