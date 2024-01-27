@@ -17,6 +17,8 @@ public class ReadPetDto
  
     public string address { get; set; } = null!;
 
-    public string image_url { get; set; } = null!;
+    public string Photo { get; set; } = null!;
+    public byte[] ImageBytes { get; set; } = null!;
     public ReadAbrigoDto ReadAbrigoDto { get; set; } =  null!;
+
 }

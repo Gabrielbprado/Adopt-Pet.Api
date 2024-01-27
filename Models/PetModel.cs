@@ -21,8 +21,7 @@ public class PetModel
     public string age { get; set; } = null!;
     [Required]
     public string address { get; set; } = null!;
-    [NotMapped]
-    public IFormFile PhotoFile { get; set; } = null!;
+    public string Photo { get; set; } = null!;
     public virtual AbrigoModel AbrigoModel { get; set; } = null!;
     public virtual AdocaoModel AdocaoModel { get; set; } = null!;
 

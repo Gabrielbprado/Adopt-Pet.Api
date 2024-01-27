@@ -32,6 +32,7 @@ public class PetRepository : IPetRepository
         using Stream stream = new FileStream(filePath, FileMode.Create);
         dto.PhotoFile.CopyTo(stream);
         var model = _mapper.Map<PetModel>(dto);
+        model.Photo = filePath;
         var Pet = await _context.petModels.AddAsync(model);
         _context.SaveChanges();
 
@@ -79,9 +80,18 @@ public class PetRepository : IPetRepository
 
     public IEnumerable<ReadPetDto> GetAllPet([FromQuery] int? Abrigo_id = null)
     {
-        return _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, image, Abrigo_id FROM petModels" +
+        List<ReadPetDto> pets = _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, Photo, Abrigo_id FROM petModels" +
             $" where petModels.Abrigo_id = {Abrigo_id}").ToList());
+        Console.WriteLine(pets);
 
+        foreach (var pet in pets)
+        {
+           
+            pet.ImageBytes = File.ReadAllBytes(pet.Photo);
+        
+        }
+
+        return pets;
     }
 
 
