@@ -30,12 +30,22 @@ public class AdocaoRepository : IAdocaoRepository
     }
     public async Task Adopte(AdocaoDto dto)
     {
-        var adopt = _mapper.Map<AdocaoModel>(dto);
-        _context.AdocaoModel.Add(adopt);
-       
-        var pet = await _context.petModels.FindAsync(dto.pet_id);
-        pet.adopted = true;
-        _context.SaveChanges();
+        try
+        {
+            var adopt = _mapper.Map<AdocaoModel>(dto);
+            _context.AdocaoModel.Add(adopt);
+
+            var pet = await _context.petModels.FindAsync(dto.pet_id);
+            if (pet == null)
+            {
+                throw new ApplicationException("Pet não encontrado");
+            }
+            pet.adopted = true;
+            _context.SaveChanges();
+        }  catch
+        {
+            throw new ApplicationException("Falha ao Adotar o Pet");
+        }
 
 
     }
@@ -44,15 +54,22 @@ public class AdocaoRepository : IAdocaoRepository
 
     public async Task Delete(int id,AbrigoLoginDto dto)
     {
-        var pet = await _context.AdocaoModel.FindAsync(id);
-        if (pet == null)
+        try
         {
-            throw new ApplicationException("pet não encontrado");
+            var pet = await _context.AdocaoModel.FindAsync(id);
+            if (pet == null)
+            {
+                throw new ApplicationException("pet não encontrado");
 
+            }
+            await _abrigoRepository.Login(dto);
+            _context.AdocaoModel.Remove(pet);
+            _context.SaveChanges();
         }
-       await _abrigoRepository.Login(dto);
-         _context.AdocaoModel.Remove(pet);
-        _context.SaveChanges();
+        catch
+        {
+            throw new ApplicationException("Falha ao Deletar o Pet");
+        }
 
     }
 

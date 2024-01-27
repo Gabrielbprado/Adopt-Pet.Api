@@ -36,22 +36,14 @@ public class TutorRepository : ITutorRepository
 
     public async Task<ReadTutorDto> GetIdTutor(string id)
     {
-        TutorModel? tutor = await _userManeger.FindByIdAsync(id);
+        TutorModel? tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
         var dto = _mapper.Map<ReadTutorDto>(tutor);
-        if (tutor == null)
-        {
-            throw new ApplicationException("Tutor não encontrado");
-        }
         return dto;
     }
 
     public async Task UpdateTutor(TutorDto dto, string id)
     {
-        var tutor = await _userManeger.FindByIdAsync(id);
-        if (tutor == null)
-        {
-            throw new ApplicationException("Tutor não encontrado");
-        }
+        var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
         tutor.UserName = dto.Username;
         tutor.NormalizedUserName = dto.Username.ToUpper();
 
@@ -59,12 +51,7 @@ public class TutorRepository : ITutorRepository
 
     public async Task Delete(string id)
     {
-        var tutor = await _userManeger.FindByIdAsync(id);
-        if (tutor == null)
-        {
-            throw new ApplicationException("Tutor não encontrado");
-
-        }
+        var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
         await _userManeger.DeleteAsync(tutor);
 
     }
@@ -78,6 +65,10 @@ public class TutorRepository : ITutorRepository
         }
 
         var tutor =  _signInManager.UserManager.Users.FirstOrDefault(x => x.UserName == dto.Username);
+        if (tutor == null)
+        {
+            throw new ApplicationException("Falha ao Logar");
+        }
         var token =  _tokenService.GenerateTokenTutor(tutor);
         return token;
     }
