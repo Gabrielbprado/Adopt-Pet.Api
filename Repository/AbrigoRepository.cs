@@ -29,12 +29,14 @@ public class AbrigoRepository : IAbrigoRepository
     }
     public async Task Save(AbrigoDto dto)
     {
-        var model = _mapper.Map<AbrigoModel>(dto);
-        var password = dto.Password;
-        var hash = HashPassword(password);
-        model.PasswordHash = hash;
-        var abrigo = await _context.AbrigoModel.AddAsync(model);
-        _context.SaveChanges();
+      
+            var model = _mapper.Map<AbrigoModel>(dto);
+            var password = dto.Password;
+            var hash = HashPassword(password);
+            model.PasswordHash = hash;
+            var abrigo = await _context.AbrigoModel.AddAsync(model);
+            _context.SaveChanges();
+       
 
     }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adopt_Pet.Api.Models;
 
@@ -20,10 +21,10 @@ public class PetModel
     public string age { get; set; } = null!;
     [Required]
     public string address { get; set; } = null!;
-    [Required]
-    public string image { get; set; } = null!;
+    [NotMapped]
+    public IFormFile PhotoFile { get; set; } = null!;
     public virtual AbrigoModel AbrigoModel { get; set; } = null!;
-    public virtual AdocaoModel AdocaoModel { get; set; }
+    public virtual AdocaoModel AdocaoModel { get; set; } = null!;
 
 
 }

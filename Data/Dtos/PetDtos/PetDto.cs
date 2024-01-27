@@ -17,5 +17,6 @@ public class PetDto
     [Required]
     public string address { get; set; } = null!;
     [Required]
-    public string image { get; set; } = null!;
+    public IFormFile PhotoFile { get; set; } = null!;
+ 
 }

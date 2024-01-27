@@ -28,6 +28,9 @@ public class PetRepository : IPetRepository
     }
     public async Task Save(PetDto dto)
     {
+        var filePath = Path.Combine("Storage",dto.PhotoFile.FileName);
+        using Stream stream = new FileStream(filePath, FileMode.Create);
+        dto.PhotoFile.CopyTo(stream);
         var model = _mapper.Map<PetModel>(dto);
         var Pet = await _context.petModels.AddAsync(model);
         _context.SaveChanges();
@@ -72,9 +75,9 @@ public class PetRepository : IPetRepository
 
     }
 
- 
 
-    public async Task<IEnumerable<ReadPetDto>> GetAllPet([FromQuery] int? Abrigo_id = null)
+
+    public IEnumerable<ReadPetDto> GetAllPet([FromQuery] int? Abrigo_id = null)
     {
         return _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, image, Abrigo_id FROM petModels" +
             $" where petModels.Abrigo_id = {Abrigo_id}").ToList());

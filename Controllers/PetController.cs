@@ -1,5 +1,6 @@
 ﻿using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
 using Adopt_Pet.Api.Data.Dtos.PetDtos;
+using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ public class PetController : ControllerBase
     }
 
     [HttpPost("cadastrar")]
-    public async Task<IActionResult> Save([FromBody] PetDto dto)
+    public async Task<IActionResult> Save([FromForm] PetDto dto)
     {
         await _PetRepository.Save(dto);
         return Ok("Pet Cadastrado");
