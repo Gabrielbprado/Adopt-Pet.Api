@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Adopt_Pet.Api.Repository;
 
 
-public class PetRepository : IPetRepository
+public class PetRepository : BaseRepository<PetDto>,IPetRepository
 {
     private readonly IMapper _mapper;
     private readonly DataContext _context;
@@ -26,73 +26,93 @@ public class PetRepository : IPetRepository
         _mapper = mapper;
         _abrigoRepository = abrigoRepository;
     }
-    public async Task Save(PetDto dto)
-    {
-        var filePath = Path.Combine("Storage",dto.PhotoFile.FileName);
-        using Stream stream = new FileStream(filePath, FileMode.Create);
-        dto.PhotoFile.CopyTo(stream);
-        var model = _mapper.Map<PetModel>(dto);
-        model.Photo = filePath;
-        var Pet = await _context.petModels.AddAsync(model);
-        _context.SaveChanges();
 
+    public Task Create(PetDto dto)
+    {
+        throw new NotImplementedException();
     }
 
-    public async Task<ReadPetDto> GetIdPet(int id)
+    public Task Delete(int id)
     {
-        PetModel? pet = await _context.petModels.FindAsync(id);
-        var dto = _mapper.Map<ReadPetDto>(pet);
-        if (pet == null)
-        {
-            throw new ApplicationException("Pet não encontrado");
-        }
-        return dto;
+        throw new NotImplementedException();
     }
 
-    public async Task UpdatePet(PetDto dto, int id)
+    public Task<IEnumerable<ReadPetDto>> GetAll()
     {
-        var pet = await _context.petModels.FindAsync(id);
-        if (pet == null)
-        {
-            throw new ApplicationException("pet não encontrado");
-        }
-        pet.name= dto.name;
-        pet.age = dto.age;
-        _context.SaveChanges();
-
+        throw new NotImplementedException();
     }
 
-    public async Task Delete(int id,AbrigoLoginDto dto)
+    public Task Update(PetDto dto, int id)
     {
-        var pet = await _context.petModels.FindAsync(id);
-        if (pet == null)
-        {
-            throw new ApplicationException("pet não encontrado");
-
-        }
-        await _abrigoRepository.Login(dto);
-         _context.petModels.Remove(pet);
-        _context.SaveChanges();
-
+        throw new NotImplementedException();
     }
+    //public async Task Save(PetDto dto)
+    //{
+    //    var filePath = Path.Combine("Storage",dto.PhotoFile.FileName);
+    //    using Stream stream = new FileStream(filePath, FileMode.Create);
+    //    dto.PhotoFile.CopyTo(stream);
+    //    var model = _mapper.Map<PetModel>(dto);
+    //    model.Photo = filePath;
+    //    var Pet = await _context.petModels.AddAsync(model);
+    //    _context.SaveChanges();
+
+    //}
+
+    //public async Task<ReadPetDto> GetIdPet(int id)
+    //{
+    //    PetModel? pet = await _context.petModels.FindAsync(id);
+    //    var dto = _mapper.Map<ReadPetDto>(pet);
+    //    if (pet == null)
+    //    {
+    //        throw new ApplicationException("Pet não encontrado");
+    //    }
+    //    return dto;
+    //}
+
+    //public async Task UpdatePet(PetDto dto, int id)
+    //{
+    //    var pet = await _context.petModels.FindAsync(id);
+    //    if (pet == null)
+    //    {
+    //        throw new ApplicationException("pet não encontrado");
+    //    }
+    //    pet.name= dto.name;
+    //    pet.age = dto.age;
+    //    _context.SaveChanges();
+
+    //}
+
+    //public async Task Delete(int id,AbrigoLoginDto dto)
+    //{
+    //    var pet = await _context.petModels.FindAsync(id);
+    //    if (pet == null)
+    //    {
+    //        throw new ApplicationException("pet não encontrado");
+
+    //    }
+    //    await _abrigoRepository.Login(dto);
+    //     _context.petModels.Remove(pet);
+    //    _context.SaveChanges();
+
+    //}
 
 
 
-    public IEnumerable<ReadPetDto> GetAllPet([FromQuery] int? Abrigo_id = null)
-    {
-        List<ReadPetDto> pets = _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, Photo, Abrigo_id FROM petModels" +
-            $" where petModels.Abrigo_id = {Abrigo_id}").ToList());
-        Console.WriteLine(pets);
+    //public IEnumerable<ReadPetDto> GetAllPet([FromQuery] int? Abrigo_id = null)
+    //{
+    //    List<ReadPetDto> pets = _mapper.Map<List<ReadPetDto>>(_context.petModels.FromSqlRaw($"SELECT id, name, description ,adopted, address, age, Photo, Abrigo_id FROM petModels" +
+    //        $" where petModels.Abrigo_id = {Abrigo_id}").ToList());
+    //    Console.WriteLine(pets);
 
-        foreach (var pet in pets)
-        {
-           
-            pet.ImageBytes = File.ReadAllBytes(pet.Photo);
-        
-        }
+    //    foreach (var pet in pets)
+    //    {
 
-        return pets;
-    }
+    //        pet.ImageBytes = File.ReadAllBytes(pet.Photo);
+
+    //    }
+
+    //    return pets;
+    //}
 
 
 
