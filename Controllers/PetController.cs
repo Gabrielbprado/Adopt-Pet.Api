@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Adopt_Pet.Api.Controllers.Abrigo;
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/v1")]
 public class PetController : ControllerBase
 {
     private readonly IPetRepository _PetRepository;
@@ -27,7 +27,7 @@ public class PetController : ControllerBase
     [HttpGet("listarAll")]
     public  IActionResult GetAllAbrigo(int? Abrigo_id = null)
     {
-        var abrigo = _PetRepository.GetAllPet(Abrigo_id);
+        var abrigo = _PetRepository.GetAll(Abrigo_id);
 
         return Ok(abrigo);
     }
@@ -35,14 +35,14 @@ public class PetController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetIdAbrigo(int id)
     {
-        var abrigo = await _PetRepository.GetIdPet(id);
+        var abrigo =  _PetRepository.GetId(id);
         return Ok(abrigo);
     }
 
     [HttpPost("atualizar/{id}")]
-    public async Task<IActionResult> UpdateAbrigo([FromBody] PetDto dto, int id)
+    public async Task<IActionResult> UpdateAbrigo([FromForm] UpdatePetDto dto, int id, [FromForm] AbrigoLoginDto abrigo)
     {
-        await _PetRepository.UpdatePet(dto, id);
+        await _PetRepository.Update(dto, id, abrigo);
         return NoContent();
     }
 

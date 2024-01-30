@@ -3,68 +3,75 @@ using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Security;
 
 namespace Adopt_Pet.Api.Repository;
 
 
-public class BaseRepository<Tdto, ReadTDto> : IBaseRepository<Tdto, ReadTDto> where Tdto : class where ReadTDto : class
+public class BaseRepository<Tdto, ReadTDto,UpdateTdto,T> : IBaseRepository<Tdto,ReadTDto, UpdateTdto, T> where T : class where ReadTDto : class where UpdateTdto : class where Tdto : class
 {
 
     private readonly DataContext _context;
     private readonly IMapper _mapper;
 
 
-    public BaseRepository(DataContext context, IMapper mapper)
+    public  BaseRepository(DataContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public virtual Task Save(Tdto dto)
+    public Task Save(T model)
     {
-             
-        _context.Set<Tdto>().Add(dto);
+         
+        _context.Set<T>().Add(model);
         _context.SaveChanges();
         return Task.CompletedTask;
     }
 
-    public virtual Task Update(Tdto dto,int id)
+    public async virtual Task<Task> Update(UpdateTdto dto, int id)
     {
-        var t = _context.Set<Tdto>().Find(dto);
-        if(t == null)
-        {
-            throw new ApplicationException("Não encontrado");
-        }
-        _context.Set<Tdto>().Update(dto);
-        _context.SaveChanges();
+        var t = await Verification(id);       
+        _mapper.Map(dto, t);
+        await _context.SaveChangesAsync();
         return Task.CompletedTask;
     }
-    public virtual Task Delete(int id)
+    public async virtual Task<Task> Delete(int id)
     {
-        var t = _context.Set<Tdto>().Find(id);
-        if(t == null)
-        {
-            throw new ApplicationException("Não encontrado");
-        }
-        _context.Set<Tdto>().Remove(t);
+
+        var t = await Verification(id);
+         _context.Set<T>().Remove(t);
         _context.SaveChanges();
         return Task.CompletedTask;
     }
 
-    public virtual Task<ReadTDto> GetId(int id)
+    public virtual ReadTDto GetId(int id)
     {
-        var t = _context.Set<Tdto>().Find(id);
+        var t = _context.Set<T>().Find(id);
         if(t == null)
         {
             throw new ApplicationException("Não encontrado");
         }
-        return Task.FromResult(_context.Set<ReadTDto>().Find(id)!);
+        var tdto = _mapper.Map<ReadTDto>(t);
+        return tdto;
     }
 
     public async Task<IEnumerable<ReadTDto>> GetAll()
     {
-        var entities = await _context.Set<Tdto>().ToListAsync();
+        var entities = await _context.Set<T>().ToListAsync();
         return _mapper.Map<List<ReadTDto>>(entities);
     }
+
+    public async Task<T> Verification(int id)
+    {
+        var t = await _context.Set<T>().FindAsync(id);
+        if (t == null)
+        {
+            throw new ApplicationException("Não encontrado");
+        }
+        return t;
+    }
+
+
 }
 

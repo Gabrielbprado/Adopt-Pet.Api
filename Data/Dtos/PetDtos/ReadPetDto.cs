@@ -5,7 +5,7 @@ namespace Adopt_Pet.Api.Data.Dtos.PetDtos;
 
 public class ReadPetDto
 {
-
+    public int id { get; set; }
 
     public string name { get; set; } = null!;
  

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Adopt_Pet.Api.Controllers;
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/v1")]
 public class AdocaoController : ControllerBase
 {
     private readonly IAdocaoRepository _adocaoRepository;

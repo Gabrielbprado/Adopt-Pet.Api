@@ -1,11 +1,11 @@
 ﻿namespace Adopt_Pet.Api.Repository.InterfacesRepository
 {
-    public interface IBaseRepository<Tdto,ReadTdto> where Tdto : class where ReadTdto : class
+    public interface IBaseRepository<Tdto,ReadTdto, UpdateTdto,T> where T : class where ReadTdto : class where UpdateTdto : class where Tdto : class
     {
-        Task Save(Tdto dto);
-        Task<ReadTdto> GetId(int id);
-        Task Update(Tdto dto, int id);
-        Task Delete(int id);
+        Task Save(T model);
+        ReadTdto GetId(int id);
+        Task<Task> Update(UpdateTdto dto,int id);
+        Task<Task> Delete(int id);
         Task<IEnumerable<ReadTdto>> GetAll();
     }
 }

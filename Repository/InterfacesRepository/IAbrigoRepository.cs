@@ -4,12 +4,9 @@ using Adopt_Pet.Api.Models;
 
 namespace Adopt_Pet.Api.Repository.InterfacesRepository;
 
-public interface IAbrigoRepository
+public interface IAbrigoRepository : IBaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAbrigoDto,AbrigoModel>
 {
-     Task Save(AbrigoDto dto);
-    Task<ReadAbrigoDto> GetIdAbrigo(int id);
-    Task UpdateAbrigo(AbrigoDto dto, int id);
-    Task Delete(int id);
+    Task Delete(AbrigoLoginDto dto,int id);
+    Task Save(AbrigoDto dto);
     Task<string> Login(AbrigoLoginDto dto);
-    IEnumerable<ReadAbrigoDto> GetAllAbrigo();
 }

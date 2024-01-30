@@ -9,16 +9,17 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
+using System.Collections;
 
 namespace Adopt_Pet.Api.Repository;
 
 
-public class AbrigoRepository : IAbrigoRepository
+public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAbrigoDto, AbrigoModel>,IAbrigoRepository
 {
     private readonly IMapper _mapper;
     private readonly DataContext _context;
     private readonly TokenService _tokenService;
-    public AbrigoRepository(DataContext context, IMapper mapper, TokenService tokenService)
+    public AbrigoRepository(DataContext context, IMapper mapper, TokenService tokenService) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -35,8 +36,7 @@ public class AbrigoRepository : IAbrigoRepository
             var password = dto.Password;
             var hash = HashPassword(password);
             model.PasswordHash = hash;
-            var abrigo = await _context.AbrigoModel.AddAsync(model);
-            _context.SaveChanges();
+            await base.Save(model);
         }catch 
         {
             throw new ApplicationException("Falha ao Cadastrar o Abrigo Verifique se Todos os Campos estão preenchidos Corretamente");
@@ -44,35 +44,36 @@ public class AbrigoRepository : IAbrigoRepository
 
     }
 
-    public async Task<ReadAbrigoDto> GetIdAbrigo(int id)
+    public async Task<IEnumerable<ReadAbrigoDto>> GetAll()
     {
         try
         {
-            AbrigoModel? abrigo = await _context.AbrigoModel.FindAsync(id);
-            var dto = _mapper.Map<ReadAbrigoDto>(abrigo);
-            if (abrigo == null)
-            {
-                throw new ApplicationException("Abrigo não encontrado");
-            }
+            return await base.GetAll();
+        }
+        catch
+        {
+            throw new ApplicationException("Falha ao Listar os Abrigos");
+        }
+    }
+    public ReadAbrigoDto GetId(int id)
+    {
+        try
+        {
+            var dto = base.GetId(id);
             return dto;
         }
-        catch 
+        catch
         {
             throw new ApplicationException("Ops Occoreu Um Erro No Servidor Por Favo Tente Novamente");
         }
     }
 
-    public async Task UpdateAbrigo(AbrigoDto dto, int id)
+    public async Task<Task> Update(UpdateAbrigoDto dto, int id)
     {
         try
         {
-            var abrigo = await _context.AbrigoModel.FindAsync(id);
-            if (abrigo == null)
-            {
-                throw new ApplicationException("AbrigoDtos não encontrado");
-            }
-            abrigo.UserName = dto.Username;
-            _context.SaveChanges();
+          return  await base.Update(dto, id);
+            
         } catch
         {
             throw new ApplicationException("Falha ao Atualizar o Abrigo Verifique se Todos os Campos estão preenchidos Corretamente");
@@ -80,17 +81,11 @@ public class AbrigoRepository : IAbrigoRepository
 
     }
 
-    public async Task Delete(int id)
+    public async Task Delete(AbrigoLoginDto dto,int id)
     {
         try
-        {
-            var Abrigo = await _context.AbrigoModel.FindAsync(id);
-            if (Abrigo == null)
-            {
-                throw new ApplicationException("Abrigo não encontrado");
-
-            }
-            _context.AbrigoModel.Remove(Abrigo);
+        {   await Login(dto);
+            await base.Delete(id);
             _context.SaveChanges();
         } catch
         {
@@ -101,17 +96,6 @@ public class AbrigoRepository : IAbrigoRepository
 
 
 
-    public IEnumerable<ReadAbrigoDto> GetAllAbrigo()
-    {
-        try
-        {
-            var abrigos = _context.AbrigoModel.ToList();
-            return _mapper.Map<List<ReadAbrigoDto>>(abrigos);
-        } catch
-        {
-            throw new ApplicationException("Falha ao Listar os Abrigos");
-        }
-    }
 
 
     public async Task<string> Login(AbrigoLoginDto dto)
