@@ -7,6 +7,7 @@ using Adopt_Pet.Api.Services;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using BCrypt;
+using System.Text.RegularExpressions;
 
 
 namespace Adopt_Pet.Api.Repository;
@@ -28,12 +29,17 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
     }
     public async Task Save(AbrigoDto dto)
     {
+            if(!IsValidCnpj(dto.CNPJ))
+            {
+                throw new ApplicationException("Cnpj Invalido");
+            }
         try
         {
             var model = _mapper.Map<AbrigoModel>(dto);
             var password = dto.Password;
             var hash = HashPassword(password);
             model.PasswordHash = hash;
+
             await base.Save(model);
         }catch 
         {
@@ -117,4 +123,43 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
         return hash;
     }
 
+    static bool IsValidCnpj(string cnpj)
+    {
+        cnpj = Regex.Replace(cnpj, "[^0-9]", "");
+
+        if (cnpj.Length != 14)
+            return false;
+
+        int[] multiplier1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+        int[] multiplier2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+
+        string tempCnpj = cnpj.Substring(0, 12);
+        int sum = 0;
+
+        for (int i = 0; i < 12; i++)
+        {
+            sum += int.Parse(tempCnpj[i].ToString()) * multiplier1[i];
+        }
+
+        int remainder = sum % 11;
+        remainder = (remainder < 2) ? 0 : 11 - remainder;
+
+        string digit = remainder.ToString();
+        tempCnpj += digit;
+        sum = 0;
+
+        for (int i = 0; i < 13; i++)
+        {
+            sum += int.Parse(tempCnpj[i].ToString()) * multiplier2[i];
+        }
+
+        remainder = sum % 11;
+        remainder = (remainder < 2) ? 0 : 11 - remainder;
+
+        digit += remainder.ToString();
+
+        return cnpj.EndsWith(digit);
+    }
 }
+
+

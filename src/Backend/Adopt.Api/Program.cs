@@ -1,3 +1,4 @@
+using Adopt.Domain.Services;
 using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository;
@@ -22,6 +23,7 @@ builder.Services.AddTransient<IAbrigoRepository, AbrigoRepository>();
 builder.Services.AddTransient<IPetRepository, PetRepository>();
 builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
+builder.Services.AddScoped<VisioIa>();
 
 
 

@@ -5,6 +5,7 @@ using Adopt_Pet.Api.Repository.InterfacesRepository;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Adopt_Pet.Api.Data.Dtos.PetDtos;
+using Adopt.Domain.Services;
 
 
 namespace Adopt_Pet.Api.Repository;
@@ -14,20 +15,27 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
     private readonly IMapper _mapper;
     private readonly DataContext _context;
     private readonly IAbrigoRepository _abrigoRepository;
-    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository) : base(context, mapper)
+    private readonly VisioIa _visioIa;
+    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository,VisioIa visioIa) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
         _abrigoRepository = abrigoRepository;
+        _visioIa = visioIa;
     }
 
     public async Task Save(PetDto dto)
     {
-        var filePath = Path.Combine("Storage", dto.PhotoFile.FileName);
+        string filePath = Path.Combine("Storage", dto.PhotoFile.FileName);
         using Stream stream = new FileStream(filePath, FileMode.Create);
         dto.PhotoFile.CopyTo(stream);
         var model = _mapper.Map<PetModel>(dto);
         model.Photo = filePath;
+        var isPet = _visioIa.Response();
+        if (!isPet)
+        {
+            throw new ApplicationException("A imagem não é de um pet");
+        }
         await base.Save(model);
        
     }
