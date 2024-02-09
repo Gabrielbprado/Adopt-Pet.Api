@@ -27,11 +27,14 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
     public async Task Save(PetDto dto)
     {
         string filePath = Path.Combine("Storage", dto.PhotoFile.FileName);
-        using Stream stream = new FileStream(filePath, FileMode.Create);
-        dto.PhotoFile.CopyTo(stream);
+        using (Stream stream = new FileStream(filePath, FileMode.Create))
+        {
+            dto.PhotoFile.CopyTo(stream);
+        }
         var model = _mapper.Map<PetModel>(dto);
         model.Photo = filePath;
-        var isPet = _visioIa.Response();
+    
+        var isPet = _visioIa.Response(File.ReadAllBytes(model.Photo));
         if (!isPet)
         {
             throw new ApplicationException("A imagem não é de um pet");
