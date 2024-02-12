@@ -2,6 +2,7 @@
 using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Adopt_Pet.Api.Controllers;
@@ -17,10 +18,17 @@ public class TutorController : ControllerBase
     }
 
     [HttpPost("cadastrar")]
-    public async Task<IActionResult> Save([FromBody] TutorDto dto)
+    public async Task<IActionResult> Save([FromForm] TutorDto dto)
     {
         await _tutorRepository.Save(dto);
         return Ok("Tutor Cadastrado");
+    }
+
+    [HttpGet("tutor/{username}")]
+    public async Task<IActionResult> GetTutor(string username)
+    {
+        var tutor = await _tutorRepository.GetTutor(username);
+        return Ok(tutor);
     }
 
     [HttpGet("{id}")]
@@ -52,5 +60,11 @@ public class TutorController : ControllerBase
      
     }
 
- 
+    [HttpPatch("uploadPhoto/{id}")]
+    public async Task<IActionResult> UploadPhoto(string id, IFormFile file)
+    {
+        await _tutorRepository.UploadPhoto(id, file);
+        return NoContent();
+    }
+
 }

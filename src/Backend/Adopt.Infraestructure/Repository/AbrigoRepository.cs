@@ -59,11 +59,11 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
             throw new ApplicationException("Falha ao Listar os Abrigos");
         }
     }
-    public ReadAbrigoDto GetId(int id)
+    public async Task<ReadAbrigoDto> GetId(int id)
     {
         try
         {
-            var dto = base.GetId(id);
+            var dto = await base.GetId(id);
             return dto;
         }
         catch

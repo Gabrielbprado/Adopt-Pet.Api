@@ -28,7 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Storage\" />
+    <Folder Include="Storage\Tutor\" />
+    <Folder Include="Storage\Pet\" />
   </ItemGroup>
 
 </Project>

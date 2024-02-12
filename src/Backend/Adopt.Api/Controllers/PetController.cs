@@ -17,6 +17,7 @@ public class PetController : ControllerBase
         _PetRepository = Petrepository;
     }
 
+    
     [HttpPost("cadastrar")]
     public async Task<IActionResult> Save([FromForm] PetDto dto)
     {
@@ -25,29 +26,29 @@ public class PetController : ControllerBase
     }
 
     [HttpGet("listarAll")]
-    public  IActionResult GetAllAbrigo(int? Abrigo_id = null)
+    public   IActionResult GetAllPet(int? Abrigo_id = null)
     {
-        var abrigo = _PetRepository.GetAll(Abrigo_id);
+        var pet =  _PetRepository.GetAll(Abrigo_id);
 
-        return Ok(abrigo);
+        return Ok(pet);
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetIdAbrigo(int id)
+    public async Task<IActionResult> GetIdPet(int id)
     {
-        var abrigo =  _PetRepository.GetId(id);
-        return Ok(abrigo);
+        var Pet =  await _PetRepository.GetId(id);
+        return Ok(Pet);
     }
 
     [HttpPost("atualizar/{id}")]
-    public async Task<IActionResult> UpdateAbrigo([FromForm] UpdatePetDto dto, int id, [FromForm] AbrigoLoginDto abrigo)
+    public async Task<IActionResult> UpdatePet([FromForm] UpdatePetDto dto, int id, [FromForm] AbrigoLoginDto abrigo)
     {
         await _PetRepository.Update(dto, id, abrigo);
         return NoContent();
     }
 
     [HttpDelete("deletar/{id}")]
-    public async Task<IActionResult> DeleteTutor([FromBody] AbrigoLoginDto dto,int id)
+    public async Task<IActionResult> DeletePet([FromBody] AbrigoLoginDto dto,int id)
     {
         await _PetRepository.Delete(id,dto);
         return NoContent();

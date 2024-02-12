@@ -45,9 +45,9 @@ public class BaseRepository<Tdto, ReadTDto,UpdateTdto,T> : IBaseRepository<Tdto,
         return Task.CompletedTask;
     }
 
-    public virtual ReadTDto GetId(int id)
+    public async virtual Task<ReadTDto> GetId(int id)
     {
-        var t = _context.Set<T>().Find(id);
+        var t = await _context.Set<T>().FindAsync(id);
         if(t == null)
         {
             throw new ApplicationException("Não encontrado");

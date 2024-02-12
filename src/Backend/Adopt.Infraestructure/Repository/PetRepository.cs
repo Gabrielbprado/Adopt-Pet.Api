@@ -26,7 +26,7 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
 
     public async Task Save(PetDto dto)
     {
-        string filePath = Path.Combine("Storage", dto.PhotoFile.FileName);
+        string filePath = Path.Combine("Storage/Pet", dto.PhotoFile.FileName);
         using (Stream stream = new FileStream(filePath, FileMode.Create))
         {
             dto.PhotoFile.CopyTo(stream);
@@ -59,9 +59,9 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
           return pets;
     }
 
-    public override ReadPetDto GetId(int id)
+    public async override Task<ReadPetDto> GetId(int id)
     {
-        var pet = _context.petModels.Find(id);
+        var pet = await _context.petModels.FindAsync(id);
         if (pet == null)
         {
             throw new ApplicationException("Pet não encontrado");

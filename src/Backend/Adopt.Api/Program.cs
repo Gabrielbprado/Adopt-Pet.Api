@@ -25,6 +25,8 @@ builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<VisioIa>();
 
+           
+
 
 
 var app = builder.Build();

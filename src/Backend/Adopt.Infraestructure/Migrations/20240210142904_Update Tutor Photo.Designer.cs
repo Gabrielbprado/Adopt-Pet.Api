@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Adopt.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240202182936_Update Migration")]
-    partial class UpdateMigration
+    [Migration("20240210142904_Update Tutor Photo")]
+    partial class UpdateTutorPhoto
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,6 +174,10 @@ namespace Adopt.Api.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");

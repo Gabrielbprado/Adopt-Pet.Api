@@ -30,6 +30,7 @@ public class DataContext : IdentityDbContext<TutorModel, IdentityRole, string>
 
         base.OnModelCreating(builder);
     }
+  
 
 
 

@@ -1,10 +1,16 @@
-﻿using Adopt_Pet.Api.Data;
+﻿using Adopt.Domain.Services;
+using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Adopt_Pet.Api.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.JsonPatch;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.Text;
 
 
 
@@ -73,5 +79,68 @@ public class TutorRepository : ITutorRepository
         }
         var token =  _tokenService.GenerateTokenTutor(tutor);
         return token;
+    }
+
+    public async Task<ReadTutorDto> GetTutor(string username)
+    {
+        var tutor = await _userManeger.FindByNameAsync(username) ?? throw new ApplicationException("Tutor não encontrado");
+
+        var dto = _mapper.Map<ReadTutorDto>(tutor);
+        dto.databytes = File.ReadAllBytes(tutor.Photo);
+        return dto;
+    }
+
+    public async Task<string> UploadPhoto(string id, IFormFile file)
+    {
+        try
+        {
+          
+            using (Bitmap originalImage = new Bitmap(file.OpenReadStream()))
+            {
+               
+                EncoderParameters encoderParams = new EncoderParameters(1);
+                encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 50L);
+
+                ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
+
+                
+                string compressedFilePath = Path.Combine("Storage/Tutor", file.FileName.Replace(".jpg", "_compressed.jpg"));
+
+       
+                originalImage.Save(compressedFilePath, jpegCodec, encoderParams);
+
+                
+                TutorModel tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
+
+           
+                tutor.Photo = compressedFilePath;
+
+                
+                await _userManeger.UpdateAsync(tutor);
+
+           
+                return "Foto atualizada com sucesso";
+            }
+        }
+        catch (Exception e)
+        {
+            
+            throw new ApplicationException($"Ocorreu um erro ao fazer o upload da foto: {e.Message}");
+        }
+    }
+
+    private ImageCodecInfo GetEncoderInfo(string mimeType)
+    {
+        ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+
+        foreach (ImageCodecInfo codec in codecs)
+        {
+            if (codec.MimeType == mimeType)
+            {
+                return codec;
+            }
+        }
+
+        throw new ApplicationException($"Codec para o tipo de imagem {mimeType} não encontrado");
     }
 }

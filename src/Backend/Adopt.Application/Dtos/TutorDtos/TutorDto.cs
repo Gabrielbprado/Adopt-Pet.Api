@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
@@ -22,6 +23,7 @@ namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
         public string Password { get; set; } = null!;
         [Required]
         [Compare("Password")]
-        public string Repassword { get; set; } = null!;
+        public string Repassword { get; set; } = null!;      
+        public IFormFile? PhotoFile { get; set; } 
     }
 }

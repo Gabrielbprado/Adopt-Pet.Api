@@ -7,6 +7,7 @@ namespace Adopt_Pet.Api.Models
         public string City { get; set; } = null!;
 
         public string State { get; set; } = null!;
+        public string Photo { get; set; } = "null";
         public virtual AdocaoModel AdocaoModel { get; set; }
 
         public TutorModel() : base() { }

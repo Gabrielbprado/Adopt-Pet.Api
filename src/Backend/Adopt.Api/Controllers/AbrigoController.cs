@@ -23,16 +23,16 @@ public class AbrigoController : ControllerBase
     }
 
     [HttpGet("listarAll")]
-    public  IActionResult GetAllAbrigo()
+    public  async Task<IActionResult> GetAllAbrigo()
     {
-        var abrigo =  _abrigoRepository.GetAll();
+        var abrigo =  await _abrigoRepository.GetAll();
         return Ok(abrigo);
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetIdAbrigo(int id)
+    public async Task<IActionResult> GetIdAbrigo(int id)
     {
-        var abrigo = _abrigoRepository.GetId(id);
+        var abrigo = await _abrigoRepository.GetId(id);
         return Ok(abrigo);
     }
 
