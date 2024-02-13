@@ -37,5 +37,6 @@ public class DataContext : IdentityDbContext<TutorModel, IdentityRole, string>
     public DbSet <AbrigoModel> AbrigoModel { get; set; }
     public DbSet <PetModel> petModels { get; set; }
     public DbSet<AdocaoModel> AdocaoModel { get; set; }
+    public DbSet<TutorModel> Tutors { get; set; } 
 
 }

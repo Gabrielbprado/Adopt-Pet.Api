@@ -29,17 +29,20 @@ public class TutorRepository : ITutorRepository
         _mapper = mapper;
         _signInManager = signInManager;
         _tokenService = tokenService;
+        
        
     }
-    public async Task Save(TutorDto dto)
+    public async Task<bool> Save(TutorDto dto)
     {
         var model = _mapper.Map<TutorModel>(dto);
+        model.Photo = "null";
         var tutor = await _userManeger.CreateAsync(model, dto.Password);
         if (!tutor.Succeeded)
         {
             throw new ApplicationException("Falha ao Cadastrar o Usuario");
         }
-
+        return true;
+        
     }
 
     public async Task<ReadTutorDto> GetIdTutor(string id)
@@ -49,18 +52,33 @@ public class TutorRepository : ITutorRepository
         return dto;
     }
 
-    public async Task UpdateTutor(TutorDto dto, string id)
+    public async Task<bool> UpdateTutor(TutorDto dto, string id)
     {
-        var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
-        tutor.UserName = dto.Username;
-        tutor.NormalizedUserName = dto.Username.ToUpper();
+        try
+        {
+            var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
+            tutor.UserName = dto.Username;
+            tutor.NormalizedUserName = dto.Username.ToUpper();
+            var result = await _userManeger.UpdateAsync(tutor);
+            return true;
+        }catch (Exception e)
+        {
+            throw new ApplicationException($"Ocorreu um erro ao atualizar o tutor: {e.Message}");
+        }
 
     }
 
-    public async Task Delete(string id)
+    public async Task<bool> Delete(string id)
     {
-        var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
-        await _userManeger.DeleteAsync(tutor);
+        try
+        {
+            var tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
+            await _userManeger.DeleteAsync(tutor);
+            return true;
+        } catch (Exception e)
+        {
+            throw new ApplicationException($"Ocorreu um erro ao deletar o tutor: {e.Message}");
+        }
 
     }
 
@@ -75,7 +93,7 @@ public class TutorRepository : ITutorRepository
         var tutor =  _signInManager.UserManager.Users.FirstOrDefault(x => x.UserName == dto.Username);
         if (tutor == null)
         {
-            throw new ApplicationException("Falha ao Logar");
+            throw new ApplicationException("Usuario nao Encontrado");
         }
         var token =  _tokenService.GenerateTokenTutor(tutor);
         return token;
@@ -86,7 +104,10 @@ public class TutorRepository : ITutorRepository
         var tutor = await _userManeger.FindByNameAsync(username) ?? throw new ApplicationException("Tutor não encontrado");
 
         var dto = _mapper.Map<ReadTutorDto>(tutor);
-        dto.databytes = File.ReadAllBytes(tutor.Photo);
+        if(tutor.Photo != "null") 
+        { dto.databytes = File.ReadAllBytes(tutor.Photo); 
+        }
+        
         return dto;
     }
 

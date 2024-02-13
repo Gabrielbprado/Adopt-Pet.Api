@@ -24,6 +24,5 @@ namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
         [Required]
         [Compare("Password")]
         public string Repassword { get; set; } = null!;      
-        public IFormFile? PhotoFile { get; set; } 
     }
 }
