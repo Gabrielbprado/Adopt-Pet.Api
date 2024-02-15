@@ -1,5 +1,7 @@
 using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Models;
+using Adopt_Pet.Api.Repository;
+using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Adopt_Pet.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +29,7 @@ public class DependencyInjection
         services.AddDbContext<DataContext>(options => options.UseInMemoryDatabase("TestDatabase"));
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddScoped<TokenService>();
+        services.AddTransient<IPetRepository,PetRepository>();
 
         // Configuração do Identity
         services.AddIdentity<TutorModel, IdentityRole>()

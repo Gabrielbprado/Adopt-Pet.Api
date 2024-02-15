@@ -1,4 +1,5 @@
-﻿using Adopt_Pet.Api.Models;
+﻿using Adopt.Domain.Services;
+using Adopt_Pet.Api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -10,13 +11,8 @@ namespace Adopt_Pet.Api.Services;
 
 public class TokenService 
 {
-    private IConfiguration _configuration;
-    public TokenService(IConfiguration configuration)
-    {
-        _configuration  = configuration;
-    }
-
-    public string GenerateTokenTutor(TutorModel model)
+  
+    public virtual string GenerateTokenTutor(TutorModel model)
     {
         Claim[] claims = new Claim[]
         {
@@ -41,7 +37,7 @@ public class TokenService
             
     }
 
-    public string GenerateTokenAbrigo(AbrigoModel model)
+    public virtual string GenerateTokenAbrigo(AbrigoModel model)
     {
         Claim[] claims = new Claim[]
         {

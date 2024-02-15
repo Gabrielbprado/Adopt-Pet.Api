@@ -24,6 +24,8 @@ builder.Services.AddTransient<IPetRepository, PetRepository>();
 builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<VisioIa>();
+builder.Services.AddScoped<UploadFileAzure>();
+
 
            
 

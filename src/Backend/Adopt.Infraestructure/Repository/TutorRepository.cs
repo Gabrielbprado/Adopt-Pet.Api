@@ -23,12 +23,15 @@ public class TutorRepository : ITutorRepository
     private readonly SignInManager<TutorModel> _signInManager;
     private readonly UserManager<TutorModel> _userManeger;
     private readonly TokenService _tokenService;
-    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager, TokenService tokenService)
+    private readonly UploadFileAzure _uploadFileAzure;
+
+    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager, TokenService service, UploadFileAzure uploadFileAzure)
     {
         _userManeger = userManager;
         _mapper = mapper;
         _signInManager = signInManager;
-        _tokenService = tokenService;
+        _tokenService = service;
+        _uploadFileAzure = uploadFileAzure;
         
        
     }
@@ -49,6 +52,7 @@ public class TutorRepository : ITutorRepository
     {
         TutorModel? tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
         var dto = _mapper.Map<ReadTutorDto>(tutor);
+        dto.databytes = await _uploadFileAzure.DowloadFile(tutor.Photo);
         return dto;
     }
 
@@ -105,7 +109,8 @@ public class TutorRepository : ITutorRepository
 
         var dto = _mapper.Map<ReadTutorDto>(tutor);
         if(tutor.Photo != "null") 
-        { dto.databytes = File.ReadAllBytes(tutor.Photo); 
+        {
+            dto.databytes = await _uploadFileAzure.DowloadFile(tutor.Photo); 
         }
         
         return dto;
@@ -115,33 +120,20 @@ public class TutorRepository : ITutorRepository
     {
         try
         {
-          
-            using (Bitmap originalImage = new Bitmap(file.OpenReadStream()))
+
+            using (MemoryStream stream = new MemoryStream())
             {
-               
-                EncoderParameters encoderParams = new EncoderParameters(1);
-                encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 50L);
-
-                ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
-
+                file.CopyTo(stream);
+                var bytes = stream.ToArray();
+                var base64 = Convert.ToBase64String(bytes);
+                var filePath = _uploadFileAzure.UploadFile(base64, "adopt");
+                var tutuor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
+                tutuor.Photo = filePath;
+                await _userManeger.UpdateAsync(tutuor);
                 
-                string compressedFilePath = Path.Combine("Storage/Tutor", file.FileName.Replace(".jpg", "_compressed.jpg"));
-
-       
-                originalImage.Save(compressedFilePath, jpegCodec, encoderParams);
-
-                
-                TutorModel tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
-
-           
-                tutor.Photo = compressedFilePath;
-
-                
-                await _userManeger.UpdateAsync(tutor);
-
-           
-                return "Foto atualizada com sucesso";
             }
+            return "Foto atualizada com sucesso";
+            
         }
         catch (Exception e)
         {
@@ -150,18 +142,5 @@ public class TutorRepository : ITutorRepository
         }
     }
 
-    private ImageCodecInfo GetEncoderInfo(string mimeType)
-    {
-        ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
-
-        foreach (ImageCodecInfo codec in codecs)
-        {
-            if (codec.MimeType == mimeType)
-            {
-                return codec;
-            }
-        }
-
-        throw new ApplicationException($"Codec para o tipo de imagem {mimeType} não encontrado");
-    }
+  
 }

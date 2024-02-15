@@ -26,9 +26,9 @@ public class PetController : ControllerBase
     }
 
     [HttpGet("listarAll")]
-    public   IActionResult GetAllPet(int? Abrigo_id = null)
+    public async Task<IActionResult> GetAllPet(int? Abrigo_id = null)
     {
-        var pet =  _PetRepository.GetAll(Abrigo_id);
+        var pet =  await _PetRepository.GetAll(Abrigo_id);
 
         return Ok(pet);
     }
