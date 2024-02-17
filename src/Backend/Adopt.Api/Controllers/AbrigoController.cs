@@ -1,5 +1,4 @@
 ﻿using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
-using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Microsoft.AspNetCore.Mvc;
 

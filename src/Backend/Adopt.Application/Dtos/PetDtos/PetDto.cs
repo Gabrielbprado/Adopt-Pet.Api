@@ -12,8 +12,6 @@ public class PetDto
     [Required]
     public string description { get; set; } = null!;
     [Required]
-    public bool adopted { get; set; }
-    [Required]
     public string age { get; set; } = null!;
     [Required]
     public string address { get; set; } = null!;

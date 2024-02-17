@@ -15,7 +15,7 @@ namespace adopt_pet.api.data.dtos.abrigodtos
         public string email { get; set; } = null!;
 
 
-        public int phonenumber { get; set; }
+        public string phonenumber { get; set; } = null!;
         public string CNPJ { get; set; } = null!;
     }
 }

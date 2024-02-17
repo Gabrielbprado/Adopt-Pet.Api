@@ -23,9 +23,9 @@ public class TutorRepository : ITutorRepository
     private readonly SignInManager<TutorModel> _signInManager;
     private readonly UserManager<TutorModel> _userManeger;
     private readonly TokenService _tokenService;
-    private readonly UploadFileAzure _uploadFileAzure;
+    private readonly FileAzure _uploadFileAzure;
 
-    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager, TokenService service, UploadFileAzure uploadFileAzure)
+    public TutorRepository(UserManager<TutorModel> userManager, IMapper mapper, SignInManager<TutorModel> signInManager, TokenService service, FileAzure uploadFileAzure)
     {
         _userManeger = userManager;
         _mapper = mapper;

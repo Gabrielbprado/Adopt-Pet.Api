@@ -1,11 +1,13 @@
 using Adopt.Domain.Services;
 using Adopt_Pet.Api.Data;
+using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Adopt_Pet.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -15,7 +17,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(options => options.UseLazyLoadingProxies().UseSqlite(connectionString));
+builder.Services.AddDbContext<DataContext>(options => options.UseLazyLoadingProxies().UseSqlite(connectionString, b => b.MigrationsAssembly("Adopt.Api")));
 builder.Services.AddIdentity<TutorModel, IdentityRole>().AddEntityFrameworkStores<DataContext>().AddDefaultTokenProviders();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddTransient<ITutorRepository, TutorRepository>();
@@ -24,12 +26,7 @@ builder.Services.AddTransient<IPetRepository, PetRepository>();
 builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<VisioIa>();
-builder.Services.AddScoped<UploadFileAzure>();
-
-
-           
-
-
+builder.Services.AddScoped<FileAzure>();
 
 var app = builder.Build();
 

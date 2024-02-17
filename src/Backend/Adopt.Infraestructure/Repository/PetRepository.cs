@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Adopt_Pet.Api.Data.Dtos.PetDtos;
 using Adopt.Domain.Services;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Adopt_Pet.Api.Repository;
@@ -17,8 +18,8 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
     private readonly DataContext _context;
     private readonly IAbrigoRepository _abrigoRepository;
     private readonly VisioIa _visioIa;
-    private readonly UploadFileAzure _uploadFileAzure;
-    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository,VisioIa visioIa, UploadFileAzure uploadFileAzure) : base(context, mapper)
+    private readonly FileAzure _uploadFileAzure;
+    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository,VisioIa visioIa, FileAzure uploadFileAzure) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -29,6 +30,7 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
 
     public async Task<bool> Save(PetDto dto)
     {
+      
         using (MemoryStream stream = new MemoryStream())
         {
             dto.PhotoFile.CopyTo(stream);
@@ -78,16 +80,25 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
         return dto;
     }
     
-    public async Task Delete(int id, AbrigoLoginDto dto)
+    public async Task<bool> Delete(int id, AbrigoLoginDto dto)
     {         
         await _abrigoRepository.Login(dto);
+        var pet = await _context.petModels.FindAsync(id);
+        if (pet == null)
+        {
+            throw new ApplicationException("Pet não encontrado");
+        }
+        await _uploadFileAzure.DeleteFile(pet.Photo);
         await base.Delete(id);
+        return true;
     }
 
-    public async Task Update(UpdatePetDto dto, int id, AbrigoLoginDto dtoAbrigo)
+    
+    public async Task<bool> Update(UpdatePetDto dto, int id, AbrigoLoginDto dtoAbrigo)
     {
         await _abrigoRepository.Login(dtoAbrigo);
         await base.Update(dto, id);
+        return true;
     }
 
 }

@@ -16,8 +16,7 @@ namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
         [EmailAddress]
         public string Email { get; set; } = null!;
         [Required]
-
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;

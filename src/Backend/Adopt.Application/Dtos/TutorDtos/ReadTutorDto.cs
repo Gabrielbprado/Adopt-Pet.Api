@@ -16,7 +16,7 @@ namespace Adopt_Pet.Api.Data.Dtos.TutorDtos
         public string Email { get; set; } = null!;
 
 
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = null!;
         public byte[] databytes { get; set; } = null!;
     }
 }

@@ -27,9 +27,4 @@
     <ProjectReference Include="..\Adopt.Infraestructure\Adopt.Infraestructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Storage\Tutor\" />
-    <Folder Include="Storage\Pet\" />
-  </ItemGroup>
-
 </Project>

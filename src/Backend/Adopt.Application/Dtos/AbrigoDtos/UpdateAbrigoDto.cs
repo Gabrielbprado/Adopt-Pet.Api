@@ -15,7 +15,7 @@ public class UpdateAbrigoDto
     [EmailAddress]
     public string Email { get; set; } = null!;
     [Required]
-    
-    public int PhoneNumber { get; set; }
+
+    public string PhoneNumber { get; set; } = null!;
 
 }

@@ -1,6 +1,5 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Adopt_Pet.Api.Models;
 
@@ -16,7 +15,7 @@ public class PetModel
     [Required]
     public string description { get; set; } = null!;
     [Required]
-    public bool adopted { get; set; }
+    public bool adopted { get; set; } = false;
     [Required]
     public string age { get; set; } = null!;
     [Required]
