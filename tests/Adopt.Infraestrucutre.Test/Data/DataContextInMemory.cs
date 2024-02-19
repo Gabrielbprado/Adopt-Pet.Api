@@ -1,14 +1,17 @@
-﻿using Adopt.Api.Migrations;
-using Adopt_Pet.Api.Data;
+﻿using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using SQLitePCL;
 
-public class DataContextInMemory : DbContext
+public class DataContextInMemory : IdentityDbContext<TutorModel>
 {
     private readonly SqliteConnection _connection;
     private readonly DataContext _context;
+
+  
     public DataContext GetContext() => _context;
 
     public DataContextInMemory()
@@ -18,6 +21,7 @@ public class DataContextInMemory : DbContext
         _connection.Open();
         var opts = new DbContextOptionsBuilder<DataContext>()
             .UseSqlite(_connection).EnableSensitiveDataLogging().Options;
+
         _context = new DataContext(opts);
 
 
@@ -62,6 +66,8 @@ public class DataContextInMemory : DbContext
 
     private void InsertFakeData()
     {
+        var password = "@gA487177";
+            var hash = BCrypt.Net.BCrypt.HashPassword(password);
         _context.AbrigoModel.Add(new AbrigoModel
         {
 
@@ -70,7 +76,21 @@ public class DataContextInMemory : DbContext
             City = "Rua 1",
             PhoneNumber = "123456789",
             CNPJ = "10.736.016/0001-10",
-            PasswordHash = "@gA487177",
+            PasswordHash = hash,
+            State = "SP",
+            Email = "email@gmail.com",
+
+
+        });
+        _context.AbrigoModel.Add(new AbrigoModel
+        {
+
+            id = 2,
+            UserName = "Abrigo 2",
+            City = "Rua 2",
+            PhoneNumber = "123456789",
+            CNPJ = "10.736.016/0001-10",
+            PasswordHash = hash,
             State = "SP",
             Email = "email@gmail.com",
 
@@ -84,15 +104,31 @@ public class DataContextInMemory : DbContext
             age = "2",
             Abrigo_id = 1,
             description = "Dog",
+            address = "Rua 1",
             Photo = "Dog.jpg",
             adopted = true,
-            
+
+
+        });
+        _context.petModels.Add(new PetModel
+        {
+            id = 2,
+            name = "Dog",
+            age = "2",
+            Abrigo_id = 2,
+            description = "Dog",
+            address = "Rua 2",
+            Photo = "Dog.jpg",
+            adopted = true,
+
 
         });
 
-        _context.SaveChanges();
+
+
+            _context.SaveChanges();
     }
 
-   
-    
+
+
 }

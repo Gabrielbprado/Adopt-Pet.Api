@@ -6,7 +6,9 @@ namespace Adopt_Pet.Api.Repository.InterfacesRepository;
 
 public interface IAbrigoRepository : IBaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAbrigoDto,AbrigoModel>
 {
-    Task Delete(AbrigoLoginDto dto,int id);
-    Task Save(AbrigoDto dto);
+    Task<bool> Delete(AbrigoLoginDto dto,int id);
+    Task<bool> Save(AbrigoDto dto);
     Task<string> Login(AbrigoLoginDto dto);
+    bool IsValidCnpj(string cnpj);
+    public string HashPassword(string password);
 }

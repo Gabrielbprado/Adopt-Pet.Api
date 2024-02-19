@@ -1,20 +1,15 @@
-﻿using Azure.Storage.Blobs;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using Adopt.Domain.Interfaces;
+using Azure.Storage.Blobs;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Adopt.Domain.Services;
 
-public class FileAzure
+public class FileAzure : IFileAzure
 {
     BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=adoptme;AccountKey=YxY7VK7lzeSbv0rkD8dQhp373A/2kLuz47gRtcOJYaGflCJW1NJWQVhPhqgzT7FlB7NR2XaGiqUg+AStIx6liQ==;EndpointSuffix=core.windows.net");
 
-    public string UploadFile(string base64,string container)
+    public string UploadFile(string base64,string container) 
     {
         
 

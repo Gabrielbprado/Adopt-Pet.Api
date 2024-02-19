@@ -1,16 +1,8 @@
-﻿using adopt_pet.api.data.dtos.abrigodtos;
-using Adopt_Pet.Api.Data;
-using Adopt_Pet.Api.Data.Dtos;
+﻿using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
-using Adopt_Pet.Api.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
-using Adopt_Pet.Api.Data.Dtos.PetDtos;
-using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Data.Dtos.AdocaoDtos;
 
 namespace Adopt_Pet.Api.Repository;

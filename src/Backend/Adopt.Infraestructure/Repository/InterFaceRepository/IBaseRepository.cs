@@ -5,7 +5,7 @@
         Task Save(T model);
         Task<ReadTdto> GetId(int id);
         Task<Task> Update(UpdateTdto dto,int id);
-        Task<Task> Delete(int id);
+        Task<bool> Delete(int id);
         Task<IEnumerable<ReadTdto>> GetAll();
     }
 }

@@ -8,6 +8,7 @@ using Adopt_Pet.Api.Data.Dtos.PetDtos;
 using Adopt.Domain.Services;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Authorization;
+using Adopt.Domain.Interfaces;
 
 
 namespace Adopt_Pet.Api.Repository;
@@ -17,9 +18,9 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
     private readonly IMapper _mapper;
     private readonly DataContext _context;
     private readonly IAbrigoRepository _abrigoRepository;
-    private readonly VisioIa _visioIa;
-    private readonly FileAzure _uploadFileAzure;
-    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository,VisioIa visioIa, FileAzure uploadFileAzure) : base(context, mapper)
+    private readonly IVisionIA _visioIa;
+    private readonly IFileAzure _uploadFileAzure;
+    public PetRepository(DataContext context, IMapper mapper, IAbrigoRepository abrigoRepository, IVisionIA visioIa, IFileAzure uploadFileAzure) : base(context, mapper)
     {
         _context = context;
         _mapper = mapper;
@@ -42,7 +43,7 @@ public class PetRepository : BaseRepository<PetDto,ReadPetDto,UpdatePetDto,PetMo
             }
             var base64 = Convert.ToBase64String(bytes);
             var filePath = _uploadFileAzure.UploadFile(base64, "adopt");
-            var model = _mapper.Map<PetModel>(dto);
+            PetModel model = _mapper.Map<PetModel>(dto);
             model.Photo = filePath;
         await base.Save(model);
         return true;

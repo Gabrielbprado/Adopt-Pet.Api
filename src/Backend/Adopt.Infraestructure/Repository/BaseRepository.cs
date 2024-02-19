@@ -36,13 +36,13 @@ public class BaseRepository<Tdto, ReadTDto,UpdateTdto,T> : IBaseRepository<Tdto,
         await _context.SaveChangesAsync();
         return Task.CompletedTask;
     }
-    public async virtual Task<Task> Delete(int id)
+    public async virtual Task<bool> Delete(int id)
     {
 
         var t = await Verification(id);
          _context.Set<T>().Remove(t);
         _context.SaveChanges();
-        return Task.CompletedTask;
+        return true;
     }
 
     public async virtual Task<ReadTDto> GetId(int id)

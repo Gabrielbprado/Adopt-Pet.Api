@@ -1,3 +1,4 @@
+using Adopt.Domain.Interfaces;
 using Adopt.Domain.Services;
 using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Data.Dtos.AbrigoDtos;
@@ -27,6 +28,8 @@ builder.Services.AddTransient<IAdocaoRepository, AdocaoRepository>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<VisioIa>();
 builder.Services.AddScoped<FileAzure>();
+builder.Services.AddTransient<IVisionIA, VisioIa>();
+builder.Services.AddTransient<IFileAzure, FileAzure>();
 
 var app = builder.Build();
 

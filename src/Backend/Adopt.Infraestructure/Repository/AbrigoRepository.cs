@@ -27,7 +27,7 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
         
 
     }
-    public async Task Save(AbrigoDto dto)
+    public async Task<bool> Save(AbrigoDto dto)
     {
             if(!IsValidCnpj(dto.CNPJ))
             {
@@ -41,6 +41,7 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
             model.PasswordHash = hash;
 
             await base.Save(model);
+            return true;
         }catch 
         {
             throw new ApplicationException("Falha ao Cadastrar o Abrigo Verifique se Todos os Campos estão preenchidos Corretamente");
@@ -72,11 +73,12 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
         }
     }
 
-    public async Task<Task> Update(UpdateAbrigoDto dto, int id)
+    public async Task<bool> Update(UpdateAbrigoDto dto, int id)
     {
         try
         {
-          return  await base.Update(dto, id);
+           await base.Update(dto, id);
+            return true;
             
         } catch
         {
@@ -85,12 +87,12 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
 
     }
 
-    public async Task Delete(AbrigoLoginDto dto,int id)
+    public async Task<bool> Delete(AbrigoLoginDto dto,int id)
     {
         try
         {   await Login(dto);
             await base.Delete(id);
-            _context.SaveChanges();
+            return true;
         } catch
         {
             throw new ApplicationException("Falha ao Deletar o Abrigo");
@@ -117,13 +119,13 @@ public class AbrigoRepository : BaseRepository<AbrigoDto,ReadAbrigoDto, UpdateAb
         return _tokenService.GenerateTokenAbrigo(abrigo);
     }
 
-    private string HashPassword(string password)
+    public string HashPassword(string password)
     {
         var hash = BCrypt.Net.BCrypt.HashPassword(password);
         return hash;
     }
 
-    static bool IsValidCnpj(string cnpj)
+    public bool IsValidCnpj(string cnpj)
     {
         cnpj = Regex.Replace(cnpj, "[^0-9]", "");
 

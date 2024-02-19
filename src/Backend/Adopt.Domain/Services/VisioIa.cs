@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Adopt.Domain.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace Adopt.Domain.Services;
 
-public class VisioIa
+public class VisioIa : IVisionIA
 {
     public  bool Response(byte[] bytes)
     {
@@ -28,7 +29,7 @@ public class VisioIa
         }
         return isDog;
     }
-    private async Task<string> MakeRequest(byte[] bytes)
+    public async Task<string> MakeRequest(byte[] bytes)
     {
         var client = new HttpClient();
         var queryString = HttpUtility.ParseQueryString(string.Empty);
