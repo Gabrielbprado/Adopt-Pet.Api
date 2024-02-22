@@ -3,10 +3,10 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /app
 
 # Copie os arquivos csproj dos projetos
-COPY Api/src/Backend/Adopt.Api/*.csproj ./Adopt.Api/
-COPY Api/src/Backend/Adopt.Application/*.csproj ./Adopt.Application/
-COPY Api/src/Backend/Adopt.Domain/*.csproj ./Adopt.Domain/
-COPY Api/src/Backend/Adopt.Infraestructure/*.csproj ./Adopt.Infraestructure/
+COPY src/Backend/Adopt.Api/*.csproj ./Adopt.Api/
+COPY src/Backend/Adopt.Application/*.csproj ./Adopt.Application/
+COPY src/Backend/Adopt.Domain/*.csproj ./Adopt.Domain/
+COPY src/Backend/Adopt.Infraestructure/*.csproj ./Adopt.Infraestructure/
 
 # Restaure as dependências para todos os projetos
 RUN dotnet restore ./Adopt.Api/Adopt.Api.csproj
@@ -18,7 +18,7 @@ RUN dotnet restore ./Adopt.Infraestructure/Adopt.Infraestructure.csproj
 COPY . .
 
 # Compile o aplicativo
-RUN dotnet publish -c Release -o out Api/src/Backend/Adopt.Api/Adopt.Api.csproj
+RUN dotnet publish -c Release -o out src/Backend/Adopt.Api/Adopt.Api.csproj
 
 # Construa a imagem final do aplicativo
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS runtime
