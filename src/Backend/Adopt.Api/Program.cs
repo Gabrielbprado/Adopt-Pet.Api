@@ -30,6 +30,11 @@ builder.Services.AddScoped<VisioIa>();
 builder.Services.AddScoped<FileAzure>();
 builder.Services.AddTransient<IVisionIA, VisioIa>();
 builder.Services.AddTransient<IFileAzure, FileAzure>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireLoggedIn", policy => policy.RequireRole("Abrigo"));
+    // Você pode adicionar políticas mais específicas aqui, se necessário
+});
 
 var app = builder.Build();
 

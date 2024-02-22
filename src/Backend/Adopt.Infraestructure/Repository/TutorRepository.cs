@@ -5,6 +5,7 @@ using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Adopt_Pet.Api.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.JsonPatch;
@@ -15,6 +16,7 @@ using System.Text;
 
 
 namespace Adopt_Pet.Api.Repository;
+
 
 
 public class TutorRepository : ITutorRepository
@@ -72,6 +74,7 @@ public class TutorRepository : ITutorRepository
 
     }
 
+    
     public async Task<bool> Delete(string id)
     {
         try
