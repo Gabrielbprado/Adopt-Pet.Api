@@ -35,7 +35,7 @@ public class VisioIa : IVisionIA
         var queryString = HttpUtility.ParseQueryString(string.Empty);
 
       
-        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "d22b19fb19474ca49436210b7f5cda04");
+        client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "Sua Chave");
 
         
         queryString["features"] = "tags";

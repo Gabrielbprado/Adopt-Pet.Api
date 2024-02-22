@@ -7,7 +7,7 @@ namespace Adopt.Domain.Services;
 
 public class FileAzure : IFileAzure
 {
-    BlobServiceClient blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=adoptme;AccountKey=YxY7VK7lzeSbv0rkD8dQhp373A/2kLuz47gRtcOJYaGflCJW1NJWQVhPhqgzT7FlB7NR2XaGiqUg+AStIx6liQ==;EndpointSuffix=core.windows.net");
+    BlobServiceClient blobServiceClient = new BlobServiceClient("Sua Chave de Conexão do Azure Storage");
 
     public string UploadFile(string base64,string container) 
     {
