@@ -1,4 +1,4 @@
-# Adopt-Pet
+# Adopt-Pet 🐶
 <details open="open">
   <summary>Conteudo</summary>
   <ol>
@@ -74,6 +74,53 @@ For Test is onlyne execute The Command
 ```Dotnet Run```
 In The Paste Adopt.Api or
 Open The Archive Adopt.Sln and Run the archive Adopt.Api
+
+# EndPoints
+
+## Shelter
+
+- Post: /api/Abrigo/v1/cadastrar
+  
+- Get: /api/Abrigo/v1/listarAll
+  
+- Get{id}: /api/Abrigo/v1/{id}
+  
+- Delete: /api/Abrigo/v1/deletar/{id}
+
+- Post(Login): /api/Abrigo/v1/login
+  
+
+## Adocao
+
+- Post: /api/Adocao/v1/adotar
+  
+- Delete: /api/Adocao/v1/deletar{id} **only Shelter can Delete**
+  
+
+## Pet
+
+- Post: /api/pet/v1/cadastrar
+  
+- Get: /api/pet/v1/listarAll
+  
+- Get{id}: /api/pet/v1/{id}
+  
+- Delete: /api/pet/v1/{id}
+
+  ## Tutor
+
+  - Post: /api/Tutor/v1/cadastrar
+    
+  - Get: /api/Tutor/v1/{username}
+    
+  - Delete: /api/Tutor/v1/deletar/{id}
+    
+  - Post(Login): /api/Tutor/v1/login
+    
+  - Patch: /api/Tutor/v1/uploadPhoto/{id}
+
+
+
 
 
 
