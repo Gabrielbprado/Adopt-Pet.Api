@@ -72,12 +72,12 @@ The web API also includes automated tests for each identity
   ## Installation
   1. Faça o clone do repositório
    ```sh
-   git clone https://github.com/welissonArley/MeuLivroDeReceitas.git
+   git clone https://github.com/Gabrielbprado/Adopt-Pet.Api.git
    ```
 
 In the 'Adopt.Domain' folder, navigate to the 'FileAzure' and go to Line 10.
-```BlobServiceClient blobServiceClient = new BlobServiceClient("Your Key de Conexão do Azure Storage");```
-replace ``` Sua Chave de Conexão do Azure Storage ``` for your Azure Storege Key
+```BlobServiceClient blobServiceClient = new BlobServiceClient("Your Connection Key do Azure Storage");```
+replace ``` Your Connection Key do Azure Storage ``` for your Azure Storege Key
 
 you can see how create a Azure Storege Key bellow
 
@@ -85,7 +85,7 @@ you can see how create a Azure Storege Key bellow
 
 ```after go to The Archive Visionia.cs in the line 38 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "Your Key");```
 
-replace ```Your Key``` For your SubcribedKey
+replace ```Your Key``` For your Subcribed Key
 
 [See How Here](https://www.bing.com/ck/a?!&&p=f1565e7f6cf9e00fJmltdHM9MTcwODU2MDAwMCZpZ3VpZD0wNGU0MWVkZi1kMWRkLTYwYWMtMzllMy0wZDIyZDAyNjYxNWMmaW5zaWQ9NTQ4Nw&ptn=3&ver=2&hsh=3&fclid=04e41edf-d1dd-60ac-39e3-0d22d026615c&psq=Como+criar+uma+conta+Vision+Studio&u=a1aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3B0LXB0L2F6dXJlL2FpLXNlcnZpY2VzL2NvbXB1dGVyLXZpc2lvbi9vdmVydmlldy12aXNpb24tc3R1ZGlvIzp-OnRleHQ9Q3JpZSUyMHVtYSUyMFN1YnNjcmklQzMlQTclQzMlQTNvJTIwZG8lMjBBenVyZSUyMHNlJTIwYWluZGElMjBuJUMzJUEzbyxQb2RlJTIwaWdub3JhciUyMGVzdGUlMjBwYXNzbyUyMGUlMjBmYXolQzMlQUEtbG8lMjBtYWlzJTIwdGFyZGUu&ntb=1)
 
@@ -211,7 +211,7 @@ BlobServiceClient blobServiceClient = new BlobServiceClient("Sua Chave de Conex�
  Substitua 'Sua Chave de Conexão do Azure Storage' pela sua Chave do Azure Storage.
 
  Você pode ver como criar uma Chave do Azure Storage abaixo.
- [Como Criar a Chave](https://www.bing.com/ck/a?!&&p=3b296f6d3d87c014JmltdHM9MTcwODU2MDAwMCZpZ3VpZD0wNGU0MWVkZi1kMWRkLTYwYWMtMzllMy0wZDIyZDAyNjYxNWMmaW5zaWQ9NTUyMA&ptn=3&ver=2&hsh=3&fclid=04e41edf-d1dd-60ac-39e3-0d22d026615c&psq=Como+criar+um+AzureBlob+storage&u=a1aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3B0LWJyL2F6dXJlL3N0b3JhZ2UvYmxvYnMvcXVpY2tzdGFydC1zdG9yYWdlLWV4cGxvcmVyIzp-OnRleHQ9SW4lQzMlQURjaW8lMjBSJUMzJUExcGlkbyUzQSUyMFVzYXIlMjBvJTIwR2VyZW5jaWFkb3IlMjBkZSUyMEFybWF6ZW5hbWVudG8lMjBkbyx1bWElMjBBc3NpbmF0dXJhJTIwZGUlMjBBY2Vzc28lMjBDb21wYXJ0aWxoYWRvJTIwLi4uJTIwTW9yZSUyMGxlJTIwdG9tZWxvcmVuY2klMjBhbmQlMjBncm9zJTIwLi4uJTIwTW9yZSUyIGl0ZW1zJTIwYW5k&ntb=1)
+ [Como Criar a Chave](https://www.bing.com/ck/a?!&&p=3b296f6d3d87c014JmltdHM9MTcwODU2MDAwMCZpZ3VpZD0wNGU0MWVkZi1kMWRkLTYwYWMtMzllMy0wZDIyZDAyNjYxNWMmaW5zaWQ9NTUyMA&ptn=3&ver=2&hsh=3&fclid=04e41edf-d1dd-60ac-39e3-0d22d026615c&psq=Como+criar+um+AzureBlob+storage&u=a1aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3B0LWJyL2F6dXJlL3N0b3JhZ2UvYmxvYnMvcXVpY2tzdGFydC1zdG9yYWdlLWV4cGxvcmVyIzp-OnRleHQ9SW4lQzMlQURjaW8lMjBSJUMzJUExcGlkbyUzQSUyMFVzYXIlMjBvJTIwR2VyZW5jaWFkb3IlMjBkZSUyMEFybWF6ZW5hbWVudG8lMjBkbyx1bWElMjBBc3NpbmF0dXJhJTIwZGUlMjBBY2Vzc28lMjBDb21wYXJ0aWxoYWRvJTIwLi4uJTIwTW9yZSUyMGl0ZW1z&ntb=1)
 
  Depois, vá para o arquivo 'Visionia.cs' na linha 38.
 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "Sua Chave");
