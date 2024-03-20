@@ -1,17 +1,11 @@
 ﻿using Adopt.Domain.Services;
-using Adopt_Pet.Api.Data;
 using Adopt_Pet.Api.Data.Dtos.TutorDtos;
 using Adopt_Pet.Api.Models;
 using Adopt_Pet.Api.Repository.InterfacesRepository;
 using Adopt_Pet.Api.Services;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.JsonPatch;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Text;
 
 
 
@@ -54,7 +48,7 @@ public class TutorRepository : ITutorRepository
     {
         TutorModel? tutor = await _userManeger.FindByIdAsync(id) ?? throw new ApplicationException("Tutor não encontrado");
         var dto = _mapper.Map<ReadTutorDto>(tutor);
-        dto.databytes = await _uploadFileAzure.DowloadFile(tutor.Photo);
+        dto.Databytes = await _uploadFileAzure.DowloadFile(tutor.Photo);
         return dto;
     }
 
@@ -113,7 +107,7 @@ public class TutorRepository : ITutorRepository
         var dto = _mapper.Map<ReadTutorDto>(tutor);
         if(tutor.Photo != "null") 
         {
-            dto.databytes = await _uploadFileAzure.DowloadFile(tutor.Photo); 
+            dto.Databytes = await _uploadFileAzure.DowloadFile(tutor.Photo); 
         }
         
         return dto;

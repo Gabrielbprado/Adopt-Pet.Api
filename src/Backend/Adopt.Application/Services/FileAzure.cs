@@ -7,7 +7,9 @@ namespace Adopt.Domain.Services;
 
 public class FileAzure : IFileAzure
 {
-    BlobServiceClient blobServiceClient = new BlobServiceClient("Sua Chave de Conexão do Azure Storage");
+
+    BlobServiceClient blobServiceClient = new BlobServiceClient("Your connection Key here");
+
 
     public string UploadFile(string base64,string container) 
     {
@@ -36,7 +38,7 @@ public class FileAzure : IFileAzure
         try
         {
 
-            using (var webClient = new WebClient())
+            using (WebClient webClient = new WebClient())
             {
                 var bytes = await webClient.DownloadDataTaskAsync(new Uri(urlImage));
                 return bytes;
